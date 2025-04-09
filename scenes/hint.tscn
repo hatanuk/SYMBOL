@@ -1,0 +1,227 @@
+[gd_scene load_steps=10 format=3 uid="uid://fwff8poeqhcm"]
+
+[ext_resource type="Theme" uid="uid://bodrmvg3sr15w" path="res://resources/themes/white_box_theme.tres" id="1_45kqf"]
+[ext_resource type="Script" path="res://scripts/UI/hint.gd" id="1_goxqi"]
+[ext_resource type="Texture2D" uid="uid://ckjhhu7xhl25u" path="res://resources/images/card_add.png" id="2_yxma8"]
+[ext_resource type="Texture2D" uid="uid://ceaetx8ul6ygk" path="res://resources/images/card_subtract.png" id="3_pomwm"]
+[ext_resource type="Texture2D" uid="uid://bm24tlxrvjsts" path="res://resources/images/kenny_icons/pattern_46.png" id="4_s47bn"]
+
+[sub_resource type="Animation" id="Animation_4l2uh"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_pmrv4"]
+resource_name = "fade in"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_gtpsr"]
+resource_name = "fade out"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_rsd5v"]
+_data = {
+"RESET": SubResource("Animation_4l2uh"),
+"fade in": SubResource("Animation_pmrv4"),
+"fade out": SubResource("Animation_gtpsr")
+}
+
+[node name="Hint" type="Control"]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -134.0
+offset_top = -55.0
+offset_right = 87.0
+offset_bottom = 3.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_45kqf")
+script = ExtResource("1_goxqi")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+offset_right = 342.0
+offset_bottom = 89.0
+scale = Vector2(0.65, 0.65)
+
+[node name="Operators" type="Control" parent="Panel"]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Addition" type="TextureRect" parent="Panel/Operators"]
+modulate = Color(0, 0, 0, 1)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 64.0
+offset_right = 113.0
+offset_bottom = 49.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_yxma8")
+expand_mode = 1
+
+[node name="Substraction" type="TextureRect" parent="Panel/Operators"]
+self_modulate = Color(0, 0, 0, 1)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 63.0769
+offset_top = 0.769228
+offset_right = 112.077
+offset_bottom = 48.7692
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_pomwm")
+expand_mode = 1
+
+[node name="Equals" type="Control" parent="Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 50.5385
+offset_top = -5.26924
+offset_right = 89.5385
+offset_bottom = 22.7308
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.8, 0.8)
+
+[node name="Substraction" type="TextureRect" parent="Panel/Equals"]
+self_modulate = Color(0, 0, 0, 1)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -24.5
+offset_top = -39.0
+offset_right = 24.5
+offset_bottom = 9.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_pomwm")
+expand_mode = 1
+metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
+
+[node name="Substraction2" type="TextureRect" parent="Panel/Equals"]
+self_modulate = Color(0, 0, 0, 1)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -24.5
+offset_top = -24.0
+offset_right = 24.5
+offset_bottom = 24.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_pomwm")
+expand_mode = 1
+metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
+
+[node name="ActiveCardEmoji" type="TextureRect" parent="Panel"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 11.0
+offset_top = -30.5
+offset_right = 75.0
+offset_bottom = 31.5
+grow_vertical = 2
+texture = ExtResource("4_s47bn")
+expand_mode = 2
+
+[node name="EclipsedCardEmoji" type="TextureRect" parent="Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -31.0
+offset_right = 32.0
+offset_bottom = 31.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_s47bn")
+expand_mode = 2
+
+[node name="ResultEmoji" type="TextureRect" parent="Panel"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 268.0
+offset_top = -31.5
+offset_right = 332.0
+offset_bottom = 30.5
+grow_vertical = 2
+texture = ExtResource("4_s47bn")
+expand_mode = 4
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_rsd5v")
+}
+
+[node name="LingerTimer" type="Timer" parent="."]
+wait_time = 0.2
+one_shot = true
+
+[connection signal="timeout" from="LingerTimer" to="." method="_on_linger_timer_timeout"]

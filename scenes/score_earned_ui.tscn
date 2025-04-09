@@ -1,0 +1,72 @@
+[gd_scene load_steps=11 format=3 uid="uid://bshfalpre7tsx"]
+
+[ext_resource type="Script" path="res://scripts/UI/score_earned_ui.gd" id="1_mogde"]
+[ext_resource type="Texture2D" uid="uid://dw7rh43814r06" path="res://scenes/2e2d1c3e8264f18428af57af4293415a859cbc8a_2_512x512.jpeg" id="2_m2gw6"]
+[ext_resource type="FontFile" uid="uid://60niuseer8g5" path="res://resources/fonts/Tektur-Bold.ttf" id="2_xky0y"]
+[ext_resource type="Shader" path="res://shaders/color_change_and_dissolve.gdshader" id="2_yxcex"]
+[ext_resource type="FontFile" uid="uid://be10y8fgoiayy" path="res://addons/icons-fonts/icons_fonts/emojis/NotoColorEmoji.ttf" id="3_oks8d"]
+[ext_resource type="Script" path="res://addons/icons-fonts/nodes/FontIcon.gd" id="4_bms0t"]
+[ext_resource type="Script" path="res://addons/icons-fonts/resources/FontIconSetting.gd" id="5_ustyd"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7kvix"]
+shader = ExtResource("2_yxcex")
+shader_parameter/tolerance = 0.13
+shader_parameter/prev_color = Color(1, 1, 1, 1)
+shader_parameter/new_color = Color(0.702099, 0.133999, 0.0472279, 1)
+shader_parameter/dissolve_value = 1.0
+shader_parameter/burn_size = 0.03
+shader_parameter/burn_color = Color(0.645104, 0.508453, 0.237803, 1)
+shader_parameter/alpha_value = 1.0
+shader_parameter/dissolve_texture = ExtResource("2_m2gw6")
+
+[sub_resource type="LabelSettings" id="LabelSettings_q6r3x"]
+font = ExtResource("3_oks8d")
+font_size = 40
+shadow_size = 0
+shadow_color = Color(1, 1, 1, 1)
+shadow_offset = Vector2(0, 0)
+
+[sub_resource type="Resource" id="Resource_vgemm"]
+script = ExtResource("5_ustyd")
+icon_font = "Emojis"
+icon_name = "coin"
+icon_size = 40
+icon_color = Color(1, 1, 1, 1)
+outline_color = Color(1, 1, 1, 1)
+outline_size = 0
+shadow_color = Color(1, 1, 1, 1)
+shadow_size = 0
+shadow_offset = Vector2(0, 0)
+
+[node name="ScoreEarnedUI" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+scale = Vector2(1.5, 1.5)
+script = ExtResource("1_mogde")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+material = SubResource("ShaderMaterial_7kvix")
+layout_mode = 0
+offset_left = -53.0
+offset_right = 66.0
+offset_bottom = 52.0
+
+[node name="Text" type="Label" parent="HBoxContainer"]
+modulate = Color(0.580392, 0.372549, 0.439216, 1)
+use_parent_material = true
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 1
+theme_override_fonts/font = ExtResource("2_xky0y")
+theme_override_font_sizes/font_size = 40
+text = "+30"
+
+[node name="CoinIcon" type="Label" parent="HBoxContainer"]
+use_parent_material = true
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_stretch_ratio = 0.0
+text = "🪙"
+label_settings = SubResource("LabelSettings_q6r3x")
+script = ExtResource("4_bms0t")
+icon_settings = SubResource("Resource_vgemm")

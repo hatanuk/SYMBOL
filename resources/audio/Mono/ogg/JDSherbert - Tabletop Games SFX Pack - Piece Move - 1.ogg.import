@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://c0ww6iciasdyn"
+path="res://.godot/imported/JDSherbert - Tabletop Games SFX Pack - Piece Move - 1.ogg-bb5df414fd22eb2ca23e8725c715d975.oggvorbisstr"
+
+[deps]
+
+source_file="res://resources/audio/Mono/ogg/JDSherbert - Tabletop Games SFX Pack - Piece Move - 1.ogg"
+dest_files=["res://.godot/imported/JDSherbert - Tabletop Games SFX Pack - Piece Move - 1.ogg-bb5df414fd22eb2ca23e8725c715d975.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

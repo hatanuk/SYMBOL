@@ -1,0 +1,516 @@
+[gd_scene load_steps=38 format=3 uid="uid://dvtxe6ifqim57"]
+
+[ext_resource type="Script" path="res://scripts/card/Card.gd" id="1_lq4ih"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/state_chart.gd" id="2_mkp6x"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/compound_state.gd" id="3_omrnv"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/transition.gd" id="4_q1bee"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/parallel_state.gd" id="5_4abjh"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/atomic_state.gd" id="6_lciup"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/expression_guard.gd" id="7_m7c70"]
+[ext_resource type="Animation" uid="uid://6h6x4yndpj8t" path="res://animations/card/RESET.res" id="8_c12ji"]
+[ext_resource type="Animation" uid="uid://hbmweae4q2e7" path="res://animations/card/card_flip_to_back.res" id="9_c5bw1"]
+[ext_resource type="Animation" uid="uid://cvsplij5067qk" path="res://animations/card/card_flip_to_front.res" id="10_obm7s"]
+[ext_resource type="Animation" uid="uid://ndhcquf7l6ap" path="res://animations/card/submit_and_fade.res" id="11_hsf61"]
+[ext_resource type="Script" path="res://scripts/card/collision.gd" id="12_ijcyy"]
+[ext_resource type="Script" path="res://scripts/card/full_card_area.gd" id="13_ftct3"]
+[ext_resource type="Script" path="res://scripts/card/actionable_area.gd" id="14_tifr6"]
+[ext_resource type="Shader" path="res://shaders/dissolve_and_rotation.gdshader" id="15_d8iim"]
+[ext_resource type="Script" path="res://scripts/card/card_base.gd" id="15_qvvmt"]
+[ext_resource type="Texture2D" uid="uid://dw7rh43814r06" path="res://scenes/2e2d1c3e8264f18428af57af4293415a859cbc8a_2_512x512.jpeg" id="15_tabcb"]
+[ext_resource type="Script" path="res://scripts/card/card_back.gd" id="16_jd60x"]
+[ext_resource type="Texture2D" uid="uid://bm24tlxrvjsts" path="res://resources/images/kenny_icons/pattern_46.png" id="17_cehf3"]
+[ext_resource type="Script" path="res://scripts/card/card_back_pattern.gd" id="18_nbak3"]
+[ext_resource type="Texture2D" uid="uid://jgck5orwejno" path="res://resources/icon_cache/1f3a1.png" id="19_ft0tv"]
+[ext_resource type="Texture2D" uid="uid://cqac2v168ehus" path="res://resources/icon_cache/1f4ae.png" id="20_2rt2v"]
+
+[sub_resource type="Resource" id="Resource_yi444"]
+script = ExtResource("7_m7c70")
+expression = "this_card == eclipsed_card"
+
+[sub_resource type="Resource" id="Resource_rqi0p"]
+script = ExtResource("7_m7c70")
+expression = "active_card == null"
+
+[sub_resource type="Resource" id="Resource_mws8o"]
+script = ExtResource("7_m7c70")
+expression = "eclipsed_card != this_card"
+
+[sub_resource type="Resource" id="Resource_v8fwg"]
+script = ExtResource("7_m7c70")
+expression = "mouse_over_card == false"
+
+[sub_resource type="Animation" id="Animation_4e0pg"]
+resource_name = "reject"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SubViewportContainer/SubViewport/Graphics:modulate")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0.77, 0.3696, 0.396293, 1), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_dmtbw"]
+resource_name = "shake"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SubViewportContainer:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(-375, -525), Vector2(-400, -525), Vector2(-375, -525), Vector2(-325, -525), Vector2(-375, -525)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ven33"]
+_data = {
+"RESET": ExtResource("8_c12ji"),
+"card_flip_to_back": ExtResource("9_c5bw1"),
+"card_flip_to_front": ExtResource("10_obm7s"),
+"reject": SubResource("Animation_4e0pg"),
+"shake": SubResource("Animation_dmtbw"),
+"submit_and_fade": ExtResource("11_hsf61")
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_odx73"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pbxrb"]
+size = Vector2(750, 1050)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ghohl"]
+size = Vector2(411.667, 582.396)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_lavgp"]
+shader = ExtResource("15_d8iim")
+shader_parameter/fov = 80.0
+shader_parameter/cull_back = false
+shader_parameter/y_rot = 8.55e-06
+shader_parameter/x_rot = 0.0
+shader_parameter/inset = 0.0
+shader_parameter/dissolve_value = 1.0
+shader_parameter/burn_size = 0.06
+shader_parameter/burn_color = Color(0.749484, 0.620683, 0.927156, 1)
+shader_parameter/burn_offset = null
+shader_parameter/size_effect = 0.1
+shader_parameter/speed = 0.0
+shader_parameter/highlight_strength = 0.5
+shader_parameter/color_mode_toggle = false
+shader_parameter/is_horizontal = false
+shader_parameter/pause_duration = 0.5
+shader_parameter/modulate = Color(1, 1, 1, 1)
+shader_parameter/dissolve_texture = ExtResource("15_tabcb")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g4hgr"]
+bg_color = Color(0.302853, 0.410084, 0.85697, 1)
+corner_radius_top_left = 50
+corner_radius_top_right = 50
+corner_radius_bottom_right = 50
+corner_radius_bottom_left = 50
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mujqm"]
+bg_color = Color(0.302853, 0.410084, 0.85697, 1)
+corner_radius_top_left = 50
+corner_radius_top_right = 50
+corner_radius_bottom_right = 50
+corner_radius_bottom_left = 50
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_37lqb"]
+texture = ExtResource("17_cehf3")
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
+modulate_color = Color(1, 1, 1, 0.0980392)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wqgdk"]
+bg_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 50
+corner_radius_top_right = 50
+corner_radius_bottom_right = 50
+corner_radius_bottom_left = 50
+
+[node name="Card" type="Node2D"]
+modulate = Color(0.54902, 0.713726, 0.254902, 1)
+scale = Vector2(0.15, 0.15)
+script = ExtResource("1_lq4ih")
+
+[node name="StateChart" type="Node" parent="."]
+script = ExtResource("2_mkp6x")
+
+[node name="Root" type="Node" parent="StateChart"]
+script = ExtResource("3_omrnv")
+initial_state = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="StateChart/Root"]
+script = ExtResource("3_omrnv")
+initial_state = NodePath("ParallelState")
+
+[node name="ToActive" type="Node" parent="StateChart/Root/Idle"]
+script = ExtResource("4_q1bee")
+to = NodePath("../../Active")
+event = &"none"
+delay_in_seconds = "0"
+
+[node name="ParallelState" type="Node" parent="StateChart/Root/Idle"]
+script = ExtResource("5_4abjh")
+
+[node name="IdleStates" type="Node" parent="StateChart/Root/Idle/ParallelState"]
+script = ExtResource("3_omrnv")
+initial_state = NodePath("Base")
+
+[node name="Base" type="Node" parent="StateChart/Root/Idle/ParallelState/IdleStates"]
+script = ExtResource("6_lciup")
+
+[node name="ToAddition" type="Node" parent="StateChart/Root/Idle/ParallelState/IdleStates/Base"]
+script = ExtResource("4_q1bee")
+to = NodePath("../../Addition")
+event = &"begin_addition"
+delay_in_seconds = "0.0"
+
+[node name="Addition" type="Node" parent="StateChart/Root/Idle/ParallelState/IdleStates"]
+script = ExtResource("3_omrnv")
+initial_state = NodePath("NotCombinable")
+
+[node name="NotCombinable" type="Node" parent="StateChart/Root/Idle/ParallelState/IdleStates/Addition"]
+script = ExtResource("6_lciup")
+
+[node name="ToCombinable" type="Node" parent="StateChart/Root/Idle/ParallelState/IdleStates/Addition/NotCombinable"]
+script = ExtResource("4_q1bee")
+to = NodePath("../../Combinable")
+event = &"card_is_combinable"
+delay_in_seconds = "0.0"
+
+[node name="ToBase" type="Node" parent="StateChart/Root/Idle/ParallelState/IdleStates/Addition"]
+script = ExtResource("4_q1bee")
+to = NodePath("../../Base")
+event = &"cancel_action"
+delay_in_seconds = "0.0"
+
+[node name="Combinable" type="Node" parent="StateChart/Root/Idle/ParallelState/IdleStates/Addition"]
+script = ExtResource("6_lciup")
+
+[node name="IsEclipsed" type="Node" parent="StateChart/Root/Idle/ParallelState"]
+script = ExtResource("3_omrnv")
+initial_state = NodePath("NotEclipsed")
+
+[node name="NotEclipsed" type="Node" parent="StateChart/Root/Idle/ParallelState/IsEclipsed"]
+script = ExtResource("6_lciup")
+
+[node name="ToEclipsed" type="Node" parent="StateChart/Root/Idle/ParallelState/IsEclipsed/NotEclipsed"]
+script = ExtResource("4_q1bee")
+to = NodePath("../../Eclipsed")
+event = &"eclipsed_card_update"
+guard = SubResource("Resource_yi444")
+delay_in_seconds = "0.0"
+
+[node name="Eclipsed" type="Node" parent="StateChart/Root/Idle/ParallelState/IsEclipsed"]
+script = ExtResource("6_lciup")
+
+[node name="ToNotEclipsedOnNoActiveCard" type="Node" parent="StateChart/Root/Idle/ParallelState/IsEclipsed/Eclipsed"]
+script = ExtResource("4_q1bee")
+to = NodePath("../../NotEclipsed")
+event = &"active_card_update"
+guard = SubResource("Resource_rqi0p")
+delay_in_seconds = "0.0
+"
+
+[node name="ToNotEclipsed" type="Node" parent="StateChart/Root/Idle/ParallelState/IsEclipsed/Eclipsed"]
+script = ExtResource("4_q1bee")
+to = NodePath("../../NotEclipsed")
+event = &"eclipsed_card_update"
+guard = SubResource("Resource_mws8o")
+delay_in_seconds = "0
+"
+
+[node name="Active" type="Node" parent="StateChart/Root"]
+script = ExtResource("3_omrnv")
+initial_state = NodePath("Hovered")
+
+[node name="Hovered" type="Node" parent="StateChart/Root/Active"]
+script = ExtResource("6_lciup")
+
+[node name="ToDragged" type="Node" parent="StateChart/Root/Active/Hovered"]
+script = ExtResource("4_q1bee")
+to = NodePath("../../Dragged")
+event = &"primary_pressed"
+delay_in_seconds = "0.0"
+
+[node name="AutomaticToIdle" type="Node" parent="StateChart/Root/Active/Hovered"]
+script = ExtResource("4_q1bee")
+to = NodePath("../../../Idle")
+guard = SubResource("Resource_v8fwg")
+delay_in_seconds = "0"
+
+[node name="Dragged" type="Node" parent="StateChart/Root/Active"]
+script = ExtResource("3_omrnv")
+initial_state = NodePath("OverNone")
+
+[node name="OverNone" type="Node" parent="StateChart/Root/Active/Dragged"]
+script = ExtResource("6_lciup")
+
+[node name="OverIdleCard" type="Node" parent="StateChart/Root/Active/Dragged"]
+script = ExtResource("6_lciup")
+
+[node name="OverDealtCard" type="Node" parent="StateChart/Root/Active/Dragged"]
+script = ExtResource("6_lciup")
+
+[node name="ToHovered" type="Node" parent="StateChart/Root/Active/Dragged"]
+script = ExtResource("4_q1bee")
+to = NodePath("../../Hovered")
+event = &"primary_released"
+delay_in_seconds = "0"
+
+[node name="ModulationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_ven33"),
+"cards": SubResource("AnimationLibrary_odx73")
+}
+
+[node name="MovementPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_ven33"),
+"cards": SubResource("AnimationLibrary_odx73")
+}
+
+[node name="Collision" type="Node2D" parent="."]
+script = ExtResource("12_ijcyy")
+
+[node name="FullCardArea" type="Area2D" parent="Collision"]
+collision_mask = 0
+script = ExtResource("13_ftct3")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Collision/FullCardArea"]
+position = Vector2(-1.66667, -1.66667)
+shape = SubResource("RectangleShape2D_pbxrb")
+
+[node name="ActionableArea" type="Area2D" parent="Collision"]
+collision_layer = 8
+collision_mask = 14
+script = ExtResource("14_tifr6")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Collision/ActionableArea"]
+z_index = 200
+position = Vector2(1.90735e-06, 0)
+shape = SubResource("RectangleShape2D_ghohl")
+debug_color = Color(0.966564, 0.10919, 0.376227, 0.42)
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
+material = SubResource("ShaderMaterial_lavgp")
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -375.0
+offset_top = -525.0
+offset_right = 375.0
+offset_bottom = 525.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(750, 1050)
+render_target_update_mode = 4
+
+[node name="Graphics" type="Control" parent="SubViewportContainer/SubViewport"]
+clip_children = 2
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -375.0
+offset_top = -525.0
+offset_right = 375.0
+offset_bottom = 525.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+mouse_filter = 2
+
+[node name="CardBase" type="Panel" parent="SubViewportContainer/SubViewport/Graphics"]
+z_index = -1
+clip_contents = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_g4hgr")
+script = ExtResource("15_qvvmt")
+
+[node name="CardBack" type="Panel" parent="SubViewportContainer/SubViewport/Graphics/CardBase"]
+modulate = Color(1, 1, 1, 0)
+clip_children = 2
+clip_contents = true
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.405
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -290.417
+offset_top = -511.667
+offset_right = 363.333
+offset_bottom = 513.333
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_mujqm")
+script = ExtResource("16_jd60x")
+metadata/_edit_group_ = true
+
+[node name="CardBackPattern" type="Panel" parent="SubViewportContainer/SubViewport/Graphics/CardBase/CardBack"]
+clip_children = 2
+clip_contents = true
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.442
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -362.5
+offset_top = -453.05
+offset_right = 362.5
+offset_bottom = 512.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(350, 500)
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_37lqb")
+script = ExtResource("18_nbak3")
+
+[node name="CardFront" type="Panel" parent="SubViewportContainer/SubViewport/Graphics/CardBase"]
+clip_children = 2
+clip_contents = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -361.667
+offset_top = -511.667
+offset_right = 363.333
+offset_bottom = 513.333
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(362, 512)
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_wqgdk")
+metadata/_edit_group_ = true
+
+[node name="EmojiTexture" type="TextureRect" parent="SubViewportContainer/SubViewport/Graphics/CardBase/CardFront"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -64.0
+offset_top = -64.0
+offset_right = 64.0
+offset_bottom = 64.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(4, 4)
+pivot_offset = Vector2(64, 64)
+mouse_filter = 2
+texture = ExtResource("19_ft0tv")
+
+[node name="ModifierTexture" type="TextureRect" parent="SubViewportContainer/SubViewport/Graphics/CardBase"]
+visible = false
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -128.0
+offset_bottom = 128.0
+grow_horizontal = 0
+mouse_filter = 2
+texture = ExtResource("20_2rt2v")
+
+[node name="Debug" type="Control" parent="SubViewportContainer/SubViewport"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Color" type="ColorRect" parent="SubViewportContainer/SubViewport/Debug"]
+visible = false
+layout_mode = 0
+offset_left = -267.0
+offset_top = -380.0
+offset_right = 267.0
+offset_bottom = 333.0
+color = Color(0.541176, 1, 1, 1)
+metadata/_edit_lock_ = true
+
+[node name="ZIndex" type="Label" parent="SubViewportContainer/SubViewport/Debug"]
+modulate = Color(0, 0, 0, 1)
+layout_mode = 0
+offset_left = -360.0
+offset_top = -513.0
+offset_right = 47.0
+offset_bottom = -250.0
+scale = Vector2(10, 10)
+text = "hi"
+metadata/_edit_lock_ = true
+
+[node name="State" type="Label" parent="SubViewportContainer/SubViewport/Debug"]
+modulate = Color(0, 0, 0, 1)
+layout_mode = 0
+offset_left = -196.667
+offset_top = 286.667
+offset_right = 190.333
+offset_bottom = 516.667
+scale = Vector2(10, 10)
+text = "state"
+metadata/_edit_lock_ = true
+
+[connection signal="state_entered" from="StateChart/Root/Idle" to="." method="_on_idle_state_entered"]
+[connection signal="state_processing" from="StateChart/Root/Idle" to="." method="_on_idle_state_processing"]
+[connection signal="state_entered" from="StateChart/Root/Idle/ParallelState/IdleStates/Addition" to="." method="_on_addition_state_entered"]
+[connection signal="state_entered" from="StateChart/Root/Idle/ParallelState/IdleStates/Addition/NotCombinable" to="." method="_on_not_combinable_state_entered"]
+[connection signal="state_entered" from="StateChart/Root/Idle/ParallelState/IdleStates/Addition/Combinable" to="." method="_on_combinable_state_entered"]
+[connection signal="event_received" from="StateChart/Root/Idle/ParallelState/IsEclipsed/NotEclipsed" to="." method="_on_not_eclipsed_event_received"]
+[connection signal="state_entered" from="StateChart/Root/Idle/ParallelState/IsEclipsed/NotEclipsed" to="." method="_on_not_eclipsed_state_entered"]
+[connection signal="event_received" from="StateChart/Root/Idle/ParallelState/IsEclipsed/Eclipsed" to="." method="_on_eclipsed_event_received"]
+[connection signal="state_entered" from="StateChart/Root/Idle/ParallelState/IsEclipsed/Eclipsed" to="." method="_on_eclipsed_state_entered"]
+[connection signal="state_exited" from="StateChart/Root/Idle/ParallelState/IsEclipsed/Eclipsed" to="." method="_on_eclipsed_state_exited"]
+[connection signal="state_input" from="StateChart/Root/Active" to="." method="_on_active_state_input"]
+[connection signal="state_entered" from="StateChart/Root/Active/Hovered" to="." method="_on_hovered_state_entered"]
+[connection signal="state_exited" from="StateChart/Root/Active/Hovered" to="." method="_on_hovered_state_exited"]
+[connection signal="state_input" from="StateChart/Root/Active/Hovered" to="." method="_on_hovered_state_input"]
+[connection signal="state_processing" from="StateChart/Root/Active/Hovered" to="." method="_on_hovered_state_processing"]
+[connection signal="state_entered" from="StateChart/Root/Active/Dragged" to="." method="_on_dragged_state_entered"]
+[connection signal="state_exited" from="StateChart/Root/Active/Dragged" to="." method="_on_dragged_state_exited"]
+[connection signal="state_input" from="StateChart/Root/Active/Dragged" to="." method="_on_dragged_state_input"]
+[connection signal="state_processing" from="StateChart/Root/Active/Dragged" to="." method="_on_dragged_state_processing"]
+[connection signal="mouse_entered" from="Collision/FullCardArea" to="." method="_on_area_2d_mouse_entered"]
+[connection signal="mouse_exited" from="Collision/FullCardArea" to="." method="_on_area_2d_mouse_exited"]
+[connection signal="area_entered" from="Collision/ActionableArea" to="." method="_on_area_entered"]
+[connection signal="area_exited" from="Collision/ActionableArea" to="." method="_on_area_exited"]

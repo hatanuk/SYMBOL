@@ -1,0 +1,144 @@
+[gd_scene load_steps=12 format=3 uid="uid://dix40pwircy45"]
+
+[ext_resource type="Script" path="res://scripts/UI/flip_display.gd" id="1_af1t7"]
+[ext_resource type="Material" uid="uid://ccff38cs4bc5y" path="res://shaders/flip_display_materials/deactivated.tres" id="2_arqra"]
+[ext_resource type="Material" uid="uid://bnp7k4xlbmhab" path="res://shaders/flip_display_materials/activated.tres" id="2_t2s5k"]
+[ext_resource type="FontFile" uid="uid://bbfeoo2kuf30n" path="res://addons/icons-fonts/icons_fonts/MaterialIcons/material_design_icons.ttf" id="2_y4tc4"]
+[ext_resource type="Script" path="res://addons/icons-fonts/nodes/FontIcon.gd" id="3_4rcij"]
+[ext_resource type="FontFile" uid="uid://be10y8fgoiayy" path="res://addons/icons-fonts/icons_fonts/emojis/NotoColorEmoji.ttf" id="3_qu8ah"]
+[ext_resource type="Script" path="res://addons/icons-fonts/resources/FontIconSetting.gd" id="4_gqh8w"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_eb1iu"]
+font = ExtResource("3_qu8ah")
+shadow_size = 0
+shadow_color = Color(1, 1, 1, 1)
+shadow_offset = Vector2(0, 0)
+
+[sub_resource type="Resource" id="Resource_wh6uh"]
+script = ExtResource("4_gqh8w")
+icon_font = "Emojis"
+icon_name = "keycap_0"
+icon_size = 16
+icon_color = Color(1, 1, 1, 1)
+outline_color = Color(1, 1, 1, 1)
+outline_size = 0
+shadow_color = Color(1, 1, 1, 1)
+shadow_size = 0
+shadow_offset = Vector2(0, 0)
+
+[sub_resource type="LabelSettings" id="LabelSettings_e8cp2"]
+font = ExtResource("2_y4tc4")
+shadow_size = 0
+shadow_color = Color(1, 1, 1, 1)
+shadow_offset = Vector2(0, 0)
+
+[sub_resource type="Resource" id="Resource_b5n14"]
+script = ExtResource("4_gqh8w")
+icon_font = "MaterialIcons"
+icon_name = "image-outline"
+icon_size = 16
+icon_color = Color(1, 1, 1, 1)
+outline_color = Color(1, 1, 1, 1)
+outline_size = 0
+shadow_color = Color(1, 1, 1, 1)
+shadow_size = 0
+shadow_offset = Vector2(0, 0)
+
+[node name="FlipDisplay" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_af1t7")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+offset_bottom = 16.0
+theme_override_constants/separation = 10
+
+[node name="FontIcon" type="Label" parent="HBoxContainer"]
+material = ExtResource("2_arqra")
+layout_mode = 2
+size_flags_horizontal = 6
+text = "0️⃣"
+label_settings = SubResource("LabelSettings_eb1iu")
+script = ExtResource("3_4rcij")
+icon_settings = SubResource("Resource_wh6uh")
+
+[node name="FontIcon2" type="Label" parent="HBoxContainer"]
+material = ExtResource("2_t2s5k")
+layout_mode = 2
+size_flags_horizontal = 6
+text = "0️⃣"
+label_settings = SubResource("LabelSettings_eb1iu")
+script = ExtResource("3_4rcij")
+icon_settings = SubResource("Resource_wh6uh")
+
+[node name="FontIcon3" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+text = "0️⃣"
+label_settings = SubResource("LabelSettings_eb1iu")
+script = ExtResource("3_4rcij")
+icon_settings = SubResource("Resource_wh6uh")
+
+[node name="FontIcon4" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+text = "0️⃣"
+label_settings = SubResource("LabelSettings_eb1iu")
+script = ExtResource("3_4rcij")
+icon_settings = SubResource("Resource_wh6uh")
+
+[node name="FontIcon5" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+text = "0️⃣"
+label_settings = SubResource("LabelSettings_eb1iu")
+script = ExtResource("3_4rcij")
+icon_settings = SubResource("Resource_wh6uh")
+
+[node name="Debug" type="Control" parent="."]
+visible = false
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Size" type="HSlider" parent="Debug"]
+layout_mode = 0
+offset_left = 72.0
+offset_top = 113.0
+offset_right = 168.0
+offset_bottom = 129.0
+
+[node name="Seperation" type="HSlider" parent="Debug"]
+layout_mode = 0
+offset_left = 72.0
+offset_top = 87.0
+offset_right = 175.0
+offset_bottom = 103.0
+min_value = -50.0
+max_value = 50.0
+
+[node name="SpinBox" type="SpinBox" parent="Debug"]
+layout_mode = 0
+offset_left = 76.0
+offset_top = 143.0
+offset_right = 159.062
+offset_bottom = 174.0
+max_value = 100000.0
+
+[node name="FontIcon" type="Label" parent="Debug"]
+layout_mode = 0
+offset_right = 16.0
+offset_bottom = 16.0
+text = "󰥶"
+label_settings = SubResource("LabelSettings_e8cp2")
+script = ExtResource("3_4rcij")
+icon_settings = SubResource("Resource_b5n14")
+
+[connection signal="value_changed" from="Debug/Size" to="." method="_on_h_slider_value_changed"]
+[connection signal="value_changed" from="Debug/Seperation" to="." method="_on_h_slider_2_value_changed"]
+[connection signal="value_changed" from="Debug/SpinBox" to="." method="_on_spin_box_value_changed"]

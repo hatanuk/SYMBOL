@@ -1,0 +1,87 @@
+[gd_scene load_steps=7 format=3 uid="uid://dfcu8lmlpce6u"]
+
+[ext_resource type="Theme" uid="uid://bodrmvg3sr15w" path="res://resources/themes/white_box_theme.tres" id="1_wicv3"]
+[ext_resource type="Script" path="res://scripts/UI/action_ui.gd" id="2_3pvrk"]
+[ext_resource type="ButtonGroup" uid="uid://dn7rg62hlw77h" path="res://resources/buttons/action_buttons.tres" id="3_a4y2u"]
+[ext_resource type="Texture2D" uid="uid://drjvs4yg4s2mk" path="res://resources/images/kenny_icons/card_subtract.png" id="4_3x4is"]
+[ext_resource type="Texture2D" uid="uid://cjkni6kflnrpt" path="res://resources/images/kenny_icons/card_add.png" id="5_5378k"]
+[ext_resource type="Texture2D" uid="uid://c2d5rae16hjfq" path="res://resources/images/kenny_icons/cards_diagonal.png" id="6_iv22t"]
+
+[node name="ActionUI" type="Control"]
+layout_mode = 3
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -350.0
+offset_top = -130.0
+offset_right = -57.0
+offset_bottom = -32.0
+grow_horizontal = 0
+grow_vertical = 0
+theme = ExtResource("1_wicv3")
+script = ExtResource("2_3pvrk")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 52.0
+offset_top = 1.0
+offset_right = -38.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/MarginContainer"]
+layout_mode = 2
+
+[node name="AdditionButton" type="TextureButton" parent="Panel/MarginContainer/HBoxContainer"]
+modulate = Color(0, 0, 0, 1)
+layout_mode = 2
+size_flags_horizontal = 3
+toggle_mode = true
+button_group = ExtResource("3_a4y2u")
+texture_normal = ExtResource("5_5378k")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="SubtractionButton" type="TextureButton" parent="Panel/MarginContainer/HBoxContainer"]
+visible = false
+modulate = Color(0, 0, 0, 1)
+layout_mode = 2
+toggle_mode = true
+button_group = ExtResource("3_a4y2u")
+texture_normal = ExtResource("4_3x4is")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="DuplicationButton" type="TextureButton" parent="Panel/MarginContainer/HBoxContainer"]
+modulate = Color(0, 0, 0, 1)
+layout_mode = 2
+size_flags_horizontal = 3
+toggle_mode = true
+button_group = ExtResource("3_a4y2u")
+texture_normal = ExtResource("6_iv22t")
+ignore_texture_size = true
+stretch_mode = 5
+
+[connection signal="focus_entered" from="Panel/MarginContainer/HBoxContainer/AdditionButton" to="." method="_on_addition_button_focus_entered"]
+[connection signal="toggled" from="Panel/MarginContainer/HBoxContainer/AdditionButton" to="." method="_on_addition_button_toggled"]
+[connection signal="toggled" from="Panel/MarginContainer/HBoxContainer/SubtractionButton" to="." method="_on_subtraction_button_toggled"]
+[connection signal="focus_entered" from="Panel/MarginContainer/HBoxContainer/DuplicationButton" to="." method="_on_duplication_button_focus_entered"]
+[connection signal="focus_exited" from="Panel/MarginContainer/HBoxContainer/DuplicationButton" to="." method="_on_duplication_button_focus_exited"]
+[connection signal="toggled" from="Panel/MarginContainer/HBoxContainer/DuplicationButton" to="." method="_on_duplication_button_toggled"]

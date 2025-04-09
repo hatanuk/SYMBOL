@@ -1,0 +1,111 @@
+[gd_scene load_steps=10 format=3 uid="uid://dbngvrink7l8s"]
+
+[ext_resource type="Script" path="res://scripts/UI/threshold_ui.gd" id="1_sqoml"]
+[ext_resource type="PackedScene" uid="uid://dix40pwircy45" path="res://scenes/flip_display.tscn" id="2_daoni"]
+[ext_resource type="PackedScene" uid="uid://7kekve2wcr2a" path="res://scripts/UI/rank_ui.tscn" id="2_u42w0"]
+[ext_resource type="Texture2D" uid="uid://bonfa3iuh3u2q" path="res://resources/images/timer-clock-google.png" id="3_ttitk"]
+[ext_resource type="Texture2D" uid="uid://dym3m8a0l4pgk" path="res://resources/images/radial.png" id="4_fec34"]
+[ext_resource type="Theme" uid="uid://bodrmvg3sr15w" path="res://resources/themes/white_box_theme.tres" id="5_2h65x"]
+[ext_resource type="Theme" uid="uid://c1khhns1mlew8" path="res://resources/themes/small_font.tres" id="5_5y7b7"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_gdnuy"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_n88el"]
+
+[node name="ThresholdUI" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+script = ExtResource("1_sqoml")
+
+[node name="RankUI" parent="." instance=ExtResource("2_u42w0")]
+layout_mode = 1
+offset_left = -140.0
+offset_top = -6.0
+offset_right = -140.0
+offset_bottom = -6.0
+scale = Vector2(1.488, 1.5)
+
+[node name="TimerUI" type="VBoxContainer" parent="."]
+layout_mode = 1
+offset_top = -20.0
+offset_right = 69.0
+offset_bottom = 78.0
+theme_override_constants/separation = 0
+metadata/_edit_group_ = true
+
+[node name="TimerPanel" type="Panel" parent="TimerUI"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 3.0
+theme_override_styles/panel = SubResource("StyleBoxEmpty_gdnuy")
+
+[node name="TimerProgressBar" type="TextureProgressBar" parent="TimerUI/TimerPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -85.5
+offset_top = -78.0
+offset_right = 85.5
+offset_bottom = 89.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.3, 0.3)
+pivot_offset = Vector2(120, 120)
+size_flags_horizontal = 4
+size_flags_vertical = 4
+max_value = 90.0
+step = 0.1
+fill_mode = 4
+texture_under = ExtResource("3_ttitk")
+texture_progress = ExtResource("4_fec34")
+
+[node name="Timer" type="Timer" parent="TimerUI/TimerPanel"]
+
+[node name="TimePanel" type="Panel" parent="TimerUI"]
+layout_mode = 2
+size_flags_vertical = 3
+theme = ExtResource("5_2h65x")
+
+[node name="TimeLabel" type="RichTextLabel" parent="TimerUI/TimePanel"]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -10.5
+offset_bottom = 10.5
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("5_5y7b7")
+bbcode_enabled = true
+text = "[center]00:00[/center]"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+metadata/_edit_group_ = true
+
+[node name="Threshold" type="Panel" parent="."]
+layout_mode = 1
+offset_right = 162.0
+offset_bottom = 25.0
+theme_override_styles/panel = SubResource("StyleBoxEmpty_n88el")
+metadata/_edit_group_ = true
+
+[node name="FlipDisplay" parent="Threshold" instance=ExtResource("2_daoni")]
+layout_mode = 1
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+grow_horizontal = 1
+grow_vertical = 1
+icon_size = 80
+separation = 10
+
+[connection signal="timeout" from="TimerUI/TimerPanel/Timer" to="." method="_on_progress_update"]

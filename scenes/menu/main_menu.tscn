@@ -1,0 +1,754 @@
+[gd_scene load_steps=33 format=3 uid="uid://1hn27idsmd1h"]
+
+[ext_resource type="Script" path="res://scripts/main_menu/main_menu.gd" id="1_gr5f5"]
+[ext_resource type="Texture2D" uid="uid://bmstn2inw1vtv" path="res://resources/images/main_menu/exit_icons.png" id="2_pb1a8"]
+[ext_resource type="Texture2D" uid="uid://dg7817s1v1d2l" path="res://resources/images/main_menu/letters/letter_s.png" id="2_seu8v"]
+[ext_resource type="Texture2D" uid="uid://cukf8s6anewea" path="res://resources/images/main_menu/letters/letter_y.png" id="3_ml4o2"]
+[ext_resource type="Texture2D" uid="uid://ctbvorofnfjrg" path="res://resources/images/main_menu/settings_icon.png" id="3_sg820"]
+[ext_resource type="Texture2D" uid="uid://cx5s4l37dbuov" path="res://resources/images/main_menu/letters/letter_m.png" id="4_ogi70"]
+[ext_resource type="Texture2D" uid="uid://h7hxicvwhc30" path="res://resources/images/main_menu/letters/letter_b.png" id="5_n3qe6"]
+[ext_resource type="Texture2D" uid="uid://biietnlnpi2gk" path="res://resources/images/main_menu/letters/letter_o.png" id="6_jdrts"]
+[ext_resource type="Texture2D" uid="uid://d0r8ctyy5vkob" path="res://resources/images/main_menu/letters/letter_l.png" id="7_fj54y"]
+[ext_resource type="Texture2D" uid="uid://b6xst8hle7t4x" path="res://resources/images/hole_mask (1).png" id="8_ufed6"]
+[ext_resource type="Texture2D" uid="uid://buad26cfkqy8u" path="res://resources/images/hole_1f573-fe0f.png" id="9_38pac"]
+[ext_resource type="Shader" path="res://shaders/cardRotation.gdshader" id="10_4kwhk"]
+[ext_resource type="Script" path="res://scripts/card/card_base.gd" id="11_wxaos"]
+[ext_resource type="Script" path="res://scripts/card/card_back.gd" id="12_h1wr7"]
+[ext_resource type="Texture2D" uid="uid://bm24tlxrvjsts" path="res://resources/images/kenny_icons/pattern_46.png" id="13_tbfci"]
+[ext_resource type="Script" path="res://scripts/card/card_back_pattern.gd" id="14_0yp3h"]
+[ext_resource type="Texture2D" uid="uid://djqergh32fkcx" path="res://resources/icon_cache/1f465.png" id="15_6cn43"]
+[ext_resource type="Texture2D" uid="uid://cqac2v168ehus" path="res://resources/icon_cache/1f4ae.png" id="16_bgkfu"]
+[ext_resource type="Script" path="res://scenes/menu/menu_cards.gd" id="17_ty8kc"]
+[ext_resource type="Texture2D" uid="uid://c22c20pieqjdx" path="res://resources/icon_cache/1f464.png" id="17_xgnnf"]
+[ext_resource type="Shader" path="res://shaders/crt.gdshader" id="21_h27a5"]
+
+[sub_resource type="Animation" id="Animation_y3k0u"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_3m6c1"]
+resource_name = "fade_in"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_pmrmv"]
+resource_name = "on_click"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(0.728822, 0.728822, 0.728822, 1), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_nga2i"]
+_data = {
+"RESET": SubResource("Animation_y3k0u"),
+"fade_in": SubResource("Animation_3m6c1"),
+"on_click": SubResource("Animation_pmrmv")
+}
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1su2e"]
+shader = ExtResource("10_4kwhk")
+shader_parameter/fov = 80.0
+shader_parameter/cull_back = false
+shader_parameter/y_rot = 8.55e-06
+shader_parameter/x_rot = 0.0
+shader_parameter/inset = 0.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_aoqkw"]
+bg_color = Color(0.302853, 0.410084, 0.85697, 1)
+corner_radius_top_left = 50
+corner_radius_top_right = 50
+corner_radius_bottom_right = 50
+corner_radius_bottom_left = 50
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wl7r4"]
+bg_color = Color(0.302853, 0.410084, 0.85697, 1)
+corner_radius_top_left = 50
+corner_radius_top_right = 50
+corner_radius_bottom_right = 50
+corner_radius_bottom_left = 50
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_tyut4"]
+texture = ExtResource("13_tbfci")
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
+modulate_color = Color(1, 1, 1, 0.172549)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o5sbr"]
+bg_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 50
+corner_radius_top_right = 50
+corner_radius_bottom_right = 50
+corner_radius_bottom_left = 50
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_p41s5"]
+shader = ExtResource("10_4kwhk")
+shader_parameter/fov = 80.0
+shader_parameter/cull_back = false
+shader_parameter/y_rot = 8.55e-06
+shader_parameter/x_rot = 0.0
+shader_parameter/inset = 0.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_id0dn"]
+shader = ExtResource("21_h27a5")
+shader_parameter/overlay = false
+shader_parameter/scanlines_opacity = 0.078
+shader_parameter/scanlines_width = 0.028
+shader_parameter/grille_opacity = 0.075
+shader_parameter/resolution = Vector2(1280, 720)
+shader_parameter/pixelate = false
+shader_parameter/roll = false
+shader_parameter/roll_speed = 8.0
+shader_parameter/roll_size = 0.0
+shader_parameter/roll_variation = 5.0
+shader_parameter/distort_intensity = 0.0
+shader_parameter/noise_opacity = 1.0
+shader_parameter/noise_speed = 0.1
+shader_parameter/static_noise_intensity = 0.01
+shader_parameter/aberration = 4.75e-08
+shader_parameter/brightness = 1.0
+shader_parameter/discolor = false
+shader_parameter/warp_amount = 0.1
+shader_parameter/clip_warp = false
+shader_parameter/vignette_intensity = 0.1
+shader_parameter/vignette_opacity = 0.519
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1920.0
+offset_bottom = 1080.0
+size_flags_horizontal = 6
+size_flags_vertical = 6
+script = ExtResource("1_gr5f5")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 12
+
+[node name="IconButtons" type="Control" parent="MarginContainer"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/IconButtons"]
+layout_mode = 2
+offset_right = 256.0
+offset_bottom = 260.0
+scale = Vector2(0.3, 0.3)
+size_flags_horizontal = 0
+size_flags_vertical = 0
+size_flags_stretch_ratio = 0.1
+mouse_filter = 2
+theme_override_constants/separation = 50
+
+[node name="Exit" type="TextureButton" parent="MarginContainer/IconButtons/VBoxContainer"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+texture_normal = ExtResource("2_pb1a8")
+stretch_mode = 4
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="MarginContainer/IconButtons/VBoxContainer/Exit"]
+libraries = {
+"": SubResource("AnimationLibrary_nga2i")
+}
+
+[node name="Settings" type="TextureButton" parent="MarginContainer/IconButtons/VBoxContainer"]
+layout_mode = 2
+texture_normal = ExtResource("3_sg820")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="MarginContainer/IconButtons/VBoxContainer/Settings"]
+libraries = {
+"": SubResource("AnimationLibrary_nga2i")
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 60
+
+[node name="Seperator" type="Control" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Title" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="Letter" type="TextureRect" parent="MarginContainer/VBoxContainer/Title"]
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("2_seu8v")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="Letter2" type="TextureRect" parent="MarginContainer/VBoxContainer/Title"]
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("3_ml4o2")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="Letter3" type="TextureRect" parent="MarginContainer/VBoxContainer/Title"]
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("4_ogi70")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="Letter4" type="TextureRect" parent="MarginContainer/VBoxContainer/Title"]
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("5_n3qe6")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="Letter5" type="TextureRect" parent="MarginContainer/VBoxContainer/Title"]
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("6_jdrts")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="Letter6" type="TextureRect" parent="MarginContainer/VBoxContainer/Title"]
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("7_fj54y")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+mouse_filter = 2
+alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 18
+alignment = 1
+
+[node name="Seperator" type="Control" parent="MarginContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Seperator2" type="Control" parent="MarginContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="HoleGraphic" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_top = -180.0
+offset_bottom = -180.0
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(0.5, 0.5)
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Hole" type="TextureRect" parent="HoleGraphic"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -256.0
+offset_top = -256.0
+offset_right = 256.0
+offset_bottom = 256.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+texture = ExtResource("9_38pac")
+expand_mode = 3
+
+[node name="Mask" type="TextureRect" parent="HoleGraphic"]
+clip_children = 1
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -350.0
+offset_top = -750.0
+offset_right = 350.0
+offset_bottom = 750.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+texture = ExtResource("8_ufed6")
+expand_mode = 3
+
+[node name="Letter1" type="TextureRect" parent="HoleGraphic/Mask"]
+custom_minimum_size = Vector2(100, 100)
+layout_direction = 2
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -36.0
+offset_top = -672.0
+offset_right = 64.0
+offset_bottom = -572.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_horizontal = 4
+texture = ExtResource("2_seu8v")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="Letter2" type="TextureRect" parent="HoleGraphic/Mask"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -350.0
+offset_top = -1500.0
+offset_right = 1150.0
+offset_bottom = -1400.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_horizontal = 4
+texture = ExtResource("3_ml4o2")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="Letter3" type="TextureRect" parent="HoleGraphic/Mask"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -350.0
+offset_top = -1500.0
+offset_right = 1150.0
+offset_bottom = -1400.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_horizontal = 4
+texture = ExtResource("4_ogi70")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="Letter4" type="TextureRect" parent="HoleGraphic/Mask"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -350.0
+offset_top = -1500.0
+offset_right = 1150.0
+offset_bottom = -1400.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_horizontal = 4
+texture = ExtResource("5_n3qe6")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="Letter5" type="TextureRect" parent="HoleGraphic/Mask"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -350.0
+offset_top = -1500.0
+offset_right = 1150.0
+offset_bottom = -1400.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_horizontal = 4
+texture = ExtResource("6_jdrts")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="Letter6" type="TextureRect" parent="HoleGraphic/Mask"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -350.0
+offset_top = -1500.0
+offset_right = 1150.0
+offset_bottom = -1400.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_horizontal = 4
+texture = ExtResource("7_fj54y")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="MultiplayerCard" type="SubViewportContainer" parent="HoleGraphic"]
+material = SubResource("ShaderMaterial_1su2e")
+layout_mode = 2
+offset_left = 200.0
+offset_top = -1014.0
+offset_right = 950.0
+offset_bottom = 36.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.45, 0.45)
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.0
+script = ExtResource("17_ty8kc")
+
+[node name="SubViewport" type="SubViewport" parent="HoleGraphic/MultiplayerCard"]
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(750, 1050)
+render_target_update_mode = 4
+
+[node name="Graphics" type="Control" parent="HoleGraphic/MultiplayerCard/SubViewport"]
+clip_children = 2
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -375.0
+offset_top = -525.0
+offset_right = 375.0
+offset_bottom = 525.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+mouse_filter = 2
+
+[node name="CardBase" type="Panel" parent="HoleGraphic/MultiplayerCard/SubViewport/Graphics"]
+modulate = Color(0.763301, 0.766119, 0.77899, 1)
+clip_contents = true
+layout_mode = 1
+offset_right = 750.0
+offset_bottom = 1050.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_aoqkw")
+script = ExtResource("11_wxaos")
+
+[node name="CardBack" type="Panel" parent="HoleGraphic/MultiplayerCard/SubViewport/Graphics/CardBase"]
+clip_children = 2
+clip_contents = true
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.405
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -290.417
+offset_top = -511.667
+offset_right = 363.333
+offset_bottom = 513.333
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_wl7r4")
+script = ExtResource("12_h1wr7")
+metadata/_edit_group_ = true
+
+[node name="CardBackPattern" type="Panel" parent="HoleGraphic/MultiplayerCard/SubViewport/Graphics/CardBase/CardBack"]
+clip_children = 2
+clip_contents = true
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.442
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -362.5
+offset_top = -453.05
+offset_right = 362.5
+offset_bottom = 512.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(350, 500)
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_tyut4")
+script = ExtResource("14_0yp3h")
+
+[node name="CardFront" type="Panel" parent="HoleGraphic/MultiplayerCard/SubViewport/Graphics/CardBase"]
+clip_children = 2
+clip_contents = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -361.667
+offset_top = -511.667
+offset_right = 363.333
+offset_bottom = 513.333
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(362, 512)
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_o5sbr")
+metadata/_edit_group_ = true
+
+[node name="EmojiTexture" type="TextureRect" parent="HoleGraphic/MultiplayerCard/SubViewport/Graphics/CardBase/CardFront"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -64.0
+offset_top = -64.0
+offset_right = 64.0
+offset_bottom = 64.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(4, 4)
+pivot_offset = Vector2(64, 64)
+texture = ExtResource("15_6cn43")
+
+[node name="ModifierTexture" type="TextureRect" parent="HoleGraphic/MultiplayerCard/SubViewport/Graphics/CardBase"]
+visible = false
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -40.0
+offset_bottom = 40.0
+grow_horizontal = 0
+texture = ExtResource("16_bgkfu")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="HoleGraphic/MultiplayerCard"]
+libraries = {
+"": SubResource("AnimationLibrary_nga2i")
+}
+
+[node name="SingleplayerCard" type="SubViewportContainer" parent="HoleGraphic"]
+material = SubResource("ShaderMaterial_p41s5")
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -516.0
+offset_top = -1008.0
+offset_right = 234.0
+offset_bottom = 42.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.45, 0.45)
+script = ExtResource("17_ty8kc")
+
+[node name="SubViewport" type="SubViewport" parent="HoleGraphic/SingleplayerCard"]
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(750, 1050)
+render_target_update_mode = 4
+
+[node name="Graphics" type="Control" parent="HoleGraphic/SingleplayerCard/SubViewport"]
+clip_children = 2
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -375.0
+offset_top = -525.0
+offset_right = 375.0
+offset_bottom = 525.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+mouse_filter = 2
+
+[node name="CardBase" type="Panel" parent="HoleGraphic/SingleplayerCard/SubViewport/Graphics"]
+clip_contents = true
+layout_mode = 1
+offset_right = 750.0
+offset_bottom = 1050.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_aoqkw")
+script = ExtResource("11_wxaos")
+
+[node name="CardBack" type="Panel" parent="HoleGraphic/SingleplayerCard/SubViewport/Graphics/CardBase"]
+clip_children = 2
+clip_contents = true
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.405
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -290.417
+offset_top = -511.667
+offset_right = 363.333
+offset_bottom = 513.333
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_wl7r4")
+script = ExtResource("12_h1wr7")
+metadata/_edit_group_ = true
+
+[node name="CardBackPattern" type="Panel" parent="HoleGraphic/SingleplayerCard/SubViewport/Graphics/CardBase/CardBack"]
+clip_children = 2
+clip_contents = true
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.442
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -362.5
+offset_top = -453.05
+offset_right = 362.5
+offset_bottom = 512.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(350, 500)
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_tyut4")
+script = ExtResource("14_0yp3h")
+
+[node name="CardFront" type="Panel" parent="HoleGraphic/SingleplayerCard/SubViewport/Graphics/CardBase"]
+clip_children = 2
+clip_contents = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -361.667
+offset_top = -511.667
+offset_right = 363.333
+offset_bottom = 513.333
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(362, 512)
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_o5sbr")
+metadata/_edit_group_ = true
+
+[node name="EmojiTexture" type="TextureRect" parent="HoleGraphic/SingleplayerCard/SubViewport/Graphics/CardBase/CardFront"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -64.0
+offset_top = -64.0
+offset_right = 64.0
+offset_bottom = 64.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(4, 4)
+pivot_offset = Vector2(64, 64)
+texture = ExtResource("17_xgnnf")
+
+[node name="ModifierTexture" type="TextureRect" parent="HoleGraphic/SingleplayerCard/SubViewport/Graphics/CardBase"]
+visible = false
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -40.0
+offset_bottom = 40.0
+grow_horizontal = 0
+texture = ExtResource("16_bgkfu")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="HoleGraphic/SingleplayerCard"]
+libraries = {
+"": SubResource("AnimationLibrary_nga2i")
+}
+
+[node name="InputFilter" type="ColorRect" parent="."]
+modulate = Color(0, 0, 0, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+mouse_force_pass_scroll_events = false
+
+[node name="CRTFilter" type="CanvasLayer" parent="."]
+
+[node name="ColorRect" type="ColorRect" parent="CRTFilter"]
+material = SubResource("ShaderMaterial_id0dn")
+offset_right = 1920.0
+offset_bottom = 1080.0
+mouse_filter = 2
+metadata/_edit_use_anchors_ = true
+
+[connection signal="pressed" from="MarginContainer/IconButtons/VBoxContainer/Exit" to="." method="_on_exit_pressed"]
+[connection signal="pressed" from="MarginContainer/IconButtons/VBoxContainer/Settings" to="." method="_on_settings_pressed"]
+[connection signal="gui_input" from="HoleGraphic/MultiplayerCard" to="." method="_on_multiplayer_card_gui_input"]
+[connection signal="gui_input" from="HoleGraphic/SingleplayerCard" to="." method="_on_singleplayer_card_gui_input"]

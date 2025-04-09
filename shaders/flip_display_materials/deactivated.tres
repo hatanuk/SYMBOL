@@ -1,0 +1,9 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://ccff38cs4bc5y"]
+
+[ext_resource type="Shader" path="res://shaders/flip_display_deactivated.gdshader" id="1_p7rhe"]
+
+[resource]
+shader = ExtResource("1_p7rhe")
+shader_parameter/tolerance = 0.45
+shader_parameter/prev_color = Color(0.552941, 0.690196, 0.752941, 1)
+shader_parameter/new_color = Color(0.574998, 0.574998, 0.574998, 1)

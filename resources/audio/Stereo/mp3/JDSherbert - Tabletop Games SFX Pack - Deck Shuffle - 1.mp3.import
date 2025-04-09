@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://bvxs5eabhc6pn"
+path="res://.godot/imported/JDSherbert - Tabletop Games SFX Pack - Deck Shuffle - 1.mp3-5e3c9a5f0c417b897cdb3fa822a3d115.mp3str"
+
+[deps]
+
+source_file="res://resources/audio/Stereo/mp3/JDSherbert - Tabletop Games SFX Pack - Deck Shuffle - 1.mp3"
+dest_files=["res://.godot/imported/JDSherbert - Tabletop Games SFX Pack - Deck Shuffle - 1.mp3-5e3c9a5f0c417b897cdb3fa822a3d115.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

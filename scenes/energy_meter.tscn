@@ -1,0 +1,225 @@
+[gd_scene load_steps=15 format=3 uid="uid://dejer6u1sdad1"]
+
+[ext_resource type="SpriteFrames" uid="uid://cbvtuav5wc1o7" path="res://resources/images/energy_system/beating_heart.gif" id="1_4y2sa"]
+[ext_resource type="StyleBox" uid="uid://dtxxcncv30w46" path="res://resources/themes/hint.tres" id="1_h08mq"]
+[ext_resource type="Script" path="res://scripts/UI/energy_meter.gd" id="1_ihrpj"]
+[ext_resource type="Script" path="res://scripts/UI/energy_point.gd" id="3_0l3qd"]
+[ext_resource type="Shader" path="res://shaders/flip_display_deactivated.gdshader" id="4_g07bt"]
+[ext_resource type="Texture2D" uid="uid://gm4liyqleef8" path="res://resources/images/1f534 (1).png" id="4_shpav"]
+[ext_resource type="Theme" uid="uid://bodrmvg3sr15w" path="res://resources/themes/white_box_theme.tres" id="6_0j2hn"]
+[ext_resource type="StyleBox" uid="uid://by2wchumrciag" path="res://resources/themes/rounded_style.tres" id="7_5wrw4"]
+
+[sub_resource type="Theme" id="Theme_37cg0"]
+Panel/styles/panel = ExtResource("1_h08mq")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_j3nu4"]
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_blend = true
+corner_radius_top_left = 50
+corner_radius_top_right = 50
+corner_radius_bottom_right = 50
+corner_radius_bottom_left = 50
+corner_detail = 12
+expand_margin_left = 1.0
+expand_margin_top = 1.0
+expand_margin_right = 1.0
+expand_margin_bottom = 1.0
+shadow_color = Color(0.491583, 0.491583, 0.491583, 0.6)
+shadow_size = 2
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fahen"]
+shader = ExtResource("4_g07bt")
+shader_parameter/tolerance = 0.39
+shader_parameter/prev_color = Color(0.980392, 0.356863, 0.380392, 1)
+shader_parameter/new_color = Color(0.968445, 0.494394, 0.659838, 1)
+
+[sub_resource type="Animation" id="Animation_bx85g"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("RightPanel:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("HeartPanel:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_0symu"]
+resource_name = "blink"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("HeartPanel:modulate")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.15, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(0.898039, 0.203922, 0.25098, 1), Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("RightPanel:modulate")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.15, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(0.896178, 0.201962, 0.251895, 1), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_4b253"]
+_data = {
+"RESET": SubResource("Animation_bx85g"),
+"blink": SubResource("Animation_0symu")
+}
+
+[node name="EnergyUI" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -1584.0
+offset_bottom = -920.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_37cg0")
+script = ExtResource("1_ihrpj")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_left = 317.0
+offset_top = 41.0
+offset_right = 357.0
+offset_bottom = 81.0
+
+[node name="RightPanel" type="Panel" parent="."]
+layout_mode = 2
+offset_left = 44.0
+offset_top = 1.0
+offset_right = 264.0
+offset_bottom = 51.0
+
+[node name="EnergyPoints" type="HBoxContainer" parent="RightPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 73.0
+offset_right = -17.0
+offset_bottom = -2.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="Point1" type="Panel" parent="RightPanel/EnergyPoints"]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+theme_override_styles/panel = SubResource("StyleBoxFlat_j3nu4")
+script = ExtResource("3_0l3qd")
+
+[node name="TextureRect" type="TextureRect" parent="RightPanel/EnergyPoints/Point1"]
+material = SubResource("ShaderMaterial_fahen")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1, 1.00183)
+texture = ExtResource("4_shpav")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Point2" type="Panel" parent="RightPanel/EnergyPoints"]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+theme_override_styles/panel = SubResource("StyleBoxFlat_j3nu4")
+script = ExtResource("3_0l3qd")
+
+[node name="TextureRect" type="TextureRect" parent="RightPanel/EnergyPoints/Point2"]
+modulate = Color(0.981792, 0.659056, 0.759286, 1)
+material = SubResource("ShaderMaterial_fahen")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_shpav")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Point3" type="Panel" parent="RightPanel/EnergyPoints"]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+theme_override_styles/panel = SubResource("StyleBoxFlat_j3nu4")
+script = ExtResource("3_0l3qd")
+
+[node name="TextureRect" type="TextureRect" parent="RightPanel/EnergyPoints/Point3"]
+modulate = Color(0.981792, 0.659056, 0.759286, 1)
+material = SubResource("ShaderMaterial_fahen")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_shpav")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="HeartPanel" type="Panel" parent="."]
+layout_mode = 2
+offset_right = 100.0
+offset_bottom = 99.9999
+theme = ExtResource("6_0j2hn")
+theme_override_styles/panel = ExtResource("7_5wrw4")
+
+[node name="BeatTimer" type="Timer" parent="."]
+wait_time = 50.0
+
+[node name="BeatingHeart" type="AnimatedSprite2D" parent="."]
+position = Vector2(51, 50)
+scale = Vector2(0.15, 0.15)
+sprite_frames = ExtResource("1_4y2sa")
+animation = &"gif"
+frame = 3
+frame_progress = 0.47812
+offset = Vector2(0, -10)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_4b253")
+}
+
+[connection signal="animation_looped" from="BeatingHeart" to="." method="_on_beating_heart_animation_looped"]

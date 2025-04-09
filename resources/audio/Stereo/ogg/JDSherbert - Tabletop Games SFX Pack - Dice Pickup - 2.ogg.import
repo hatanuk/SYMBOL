@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://t48mv1s1l0bw"
+path="res://.godot/imported/JDSherbert - Tabletop Games SFX Pack - Dice Pickup - 2.ogg-d56f2930aa2b28b0621cbc7311bd1655.oggvorbisstr"
+
+[deps]
+
+source_file="res://resources/audio/Stereo/ogg/JDSherbert - Tabletop Games SFX Pack - Dice Pickup - 2.ogg"
+dest_files=["res://.godot/imported/JDSherbert - Tabletop Games SFX Pack - Dice Pickup - 2.ogg-d56f2930aa2b28b0621cbc7311bd1655.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

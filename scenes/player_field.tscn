@@ -1,0 +1,343 @@
+[gd_scene load_steps=25 format=3 uid="uid://so146qj1mx7g"]
+
+[ext_resource type="Texture2D" uid="uid://yhg0sr15eqsh" path="res://resources/images/Screenshot 2025-02-26 at 1.36.14 PM.png" id="1_hinl3"]
+[ext_resource type="PackedScene" uid="uid://cpag02njdgi8x" path="res://scenes/card_slot.tscn" id="2_xmpvw"]
+[ext_resource type="PackedScene" uid="uid://co2evvqlgwgxx" path="res://scenes/deck.tscn" id="3_ssind"]
+[ext_resource type="Script" path="res://scripts/layout/player_hand.gd" id="4_ohdf0"]
+[ext_resource type="Script" path="res://action_manager.gd" id="5_jek0u"]
+[ext_resource type="Script" path="res://scripts/managers/input_manager.gd" id="6_u4j36"]
+[ext_resource type="Script" path="res://scripts/managers/dealer_manager.gd" id="7_64e4u"]
+[ext_resource type="Script" path="res://scripts/managers/card_manager.gd" id="8_ibh6f"]
+[ext_resource type="Script" path="res://scripts/managers/database_manager.gd" id="9_wc6t5"]
+[ext_resource type="Resource" uid="uid://dlc830cpiax0b" path="res://resources/database/card_database.tres" id="10_kl5la"]
+[ext_resource type="Script" path="res://scripts/UI/action_ui.gd" id="11_5i20g"]
+[ext_resource type="ButtonGroup" uid="uid://dn7rg62hlw77h" path="res://resources/buttons/action_buttons.tres" id="12_g7lwt"]
+[ext_resource type="Texture2D" uid="uid://drjvs4yg4s2mk" path="res://resources/images/kenny_icons/card_subtract.png" id="13_nc4fp"]
+[ext_resource type="Texture2D" uid="uid://cjkni6kflnrpt" path="res://resources/images/kenny_icons/card_add.png" id="14_wks6k"]
+[ext_resource type="Texture2D" uid="uid://c2d5rae16hjfq" path="res://resources/images/kenny_icons/cards_diagonal.png" id="15_ew7lx"]
+[ext_resource type="Script" path="res://scripts/layout/positioner_mp.gd" id="16_opeju"]
+[ext_resource type="PackedScene" uid="uid://fwff8poeqhcm" path="res://scenes/hint.tscn" id="16_vbsvr"]
+[ext_resource type="PackedScene" uid="uid://dejer6u1sdad1" path="res://scenes/energy_meter.tscn" id="17_kgmx1"]
+[ext_resource type="PackedScene" uid="uid://bcwkugn6v3oy7" path="res://addons/godot_state_charts/utilities/state_chart_debugger.tscn" id="18_x1jnn"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cc4w5"]
+bg_color = Color(0.960351, 0.960351, 0.960351, 1)
+border_width_left = 6
+border_width_top = 6
+border_width_right = 6
+border_width_bottom = 6
+border_color = Color(0.796243, 0.796243, 0.796243, 1)
+border_blend = true
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+shadow_size = 4
+shadow_offset = Vector2(3, 3)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6icli"]
+size = Vector2(19, 2.11)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qpde6"]
+size = Vector2(12.04, 2.35)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lkyhv"]
+size = Vector2(12.02, 2.105)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jnx72"]
+size = Vector2(12.08, 6.57)
+
+[node name="PlayerField" type="Node2D"]
+
+[node name="Background" type="Node2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="Background"]
+position = Vector2(992, 610)
+scale = Vector2(0.806597, 0.806597)
+texture = ExtResource("1_hinl3")
+region_enabled = true
+region_rect = Rect2(-1699.4, -836.375, 4400.42, 2921.51)
+
+[node name="Managers" type="Node2D" parent="."]
+
+[node name="ActionManager" type="Node2D" parent="Managers"]
+script = ExtResource("5_jek0u")
+
+[node name="InputManager" type="Node2D" parent="Managers"]
+script = ExtResource("6_u4j36")
+
+[node name="DealerManager" type="Node2D" parent="Managers"]
+script = ExtResource("7_64e4u")
+
+[node name="CardManager" type="Node2D" parent="Managers"]
+script = ExtResource("8_ibh6f")
+
+[node name="DatabaseManager" type="Node2D" parent="Managers"]
+script = ExtResource("9_wc6t5")
+db_res = ExtResource("10_kl5la")
+
+[node name="UI" type="Control" parent="."]
+z_index = 200
+layout_mode = 3
+anchors_preset = 0
+offset_left = 1564.0
+offset_top = 928.0
+offset_right = 1604.0
+offset_bottom = 968.0
+
+[node name="ActionUI" type="Control" parent="UI"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -40.0
+offset_top = -43.0
+offset_right = 273.0
+offset_bottom = 76.0
+grow_horizontal = 0
+grow_vertical = 0
+script = ExtResource("11_5i20g")
+
+[node name="Panel" type="Panel" parent="UI/ActionUI"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -380.0
+offset_top = -88.0
+offset_right = -95.0
+offset_bottom = 7.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_cc4w5")
+
+[node name="AdditionButton" type="TextureButton" parent="UI/ActionUI/Panel"]
+modulate = Color(0, 0, 0, 1)
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 16.0
+offset_top = -40.0
+offset_right = 96.0
+offset_bottom = 40.0
+grow_vertical = 2
+toggle_mode = true
+button_group = ExtResource("12_g7lwt")
+texture_normal = ExtResource("13_nc4fp")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="SubtractionButton" type="TextureButton" parent="UI/ActionUI/Panel"]
+modulate = Color(0, 0, 0, 1)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -40.0
+offset_top = -40.0
+offset_right = 40.0
+offset_bottom = 40.0
+grow_horizontal = 2
+grow_vertical = 2
+toggle_mode = true
+button_group = ExtResource("12_g7lwt")
+texture_normal = ExtResource("14_wks6k")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="DuplicationButton" type="TextureButton" parent="UI/ActionUI/Panel"]
+modulate = Color(0, 0, 0, 1)
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -96.0
+offset_top = -40.0
+offset_right = -16.0
+offset_bottom = 40.0
+grow_horizontal = 0
+grow_vertical = 2
+toggle_mode = true
+button_group = ExtResource("12_g7lwt")
+texture_normal = ExtResource("15_ew7lx")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="Hint" parent="UI" instance=ExtResource("16_vbsvr")]
+layout_mode = 1
+offset_left = -736.0
+offset_top = 67.0
+offset_right = -512.0
+offset_bottom = 129.0
+
+[node name="Submit" type="Button" parent="UI"]
+layout_mode = 0
+offset_left = 26.9999
+offset_top = -435.0
+offset_right = 154.0
+offset_bottom = -362.0
+text = "Submit
+
+"
+
+[node name="EnergyUI" parent="UI" instance=ExtResource("17_kgmx1")]
+layout_mode = 1
+offset_left = -1173.0
+offset_top = 27.0
+offset_right = -1213.0
+offset_bottom = -13.0
+
+[node name="StatsUI" type="Control" parent="UI"]
+anchors_preset = 0
+offset_left = -15.0
+offset_top = -38.0
+offset_right = 25.0
+offset_bottom = 2.0
+
+[node name="Debug" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="ActiveCard" type="Label" parent="Debug"]
+layout_mode = 0
+offset_left = 17.0
+offset_top = 3.0
+offset_right = 149.0
+offset_bottom = 58.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 40
+text = "null"
+
+[node name="EclipsedCard" type="Label" parent="Debug"]
+layout_mode = 0
+offset_left = 17.0
+offset_top = 52.0
+offset_right = 149.0
+offset_bottom = 107.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 40
+text = "null"
+
+[node name="StateChartDebugger" parent="Debug" instance=ExtResource("18_x1jnn")]
+layout_mode = 1
+offset_left = 1334.0
+offset_top = -4.0
+offset_right = 1784.0
+offset_bottom = 409.0
+enabled = false
+
+[node name="Addition" type="Label" parent="Debug"]
+layout_mode = 0
+offset_left = 1616.0
+offset_top = 732.0
+offset_right = 1748.0
+offset_bottom = 787.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 40
+text = "test"
+
+[node name="Score" type="Label" parent="Debug"]
+layout_mode = 0
+offset_left = 9.0
+offset_top = 1024.0
+offset_right = 141.0
+offset_bottom = 1079.0
+theme_override_colors/font_color = Color(0.405749, 0.695993, 0.422095, 1)
+theme_override_font_sizes/font_size = 40
+text = "null"
+
+[node name="Layout" type="Node2D" parent="."]
+script = ExtResource("16_opeju")
+
+[node name="DealerZone" type="Node2D" parent="Layout"]
+position = Vector2(960, 540)
+
+[node name="DealerArea" type="Area2D" parent="Layout/DealerZone"]
+collision_layer = 2048
+collision_mask = 2048
+
+[node name="ShapeTarget" type="CollisionShape2D" parent="Layout/DealerZone/DealerArea"]
+position = Vector2(0, -14.5)
+scale = Vector2(100, 100)
+shape = SubResource("RectangleShape2D_6icli")
+debug_color = Color(0, 0.6, 0.701961, 0.0980392)
+
+[node name="CardSlots" type="Node2D" parent="Layout/DealerZone"]
+position = Vector2(-960, -540)
+
+[node name="CardSlot" parent="Layout/DealerZone/CardSlots" instance=ExtResource("2_xmpvw")]
+position = Vector2(960, 530)
+scale = Vector2(0.15, 0.15)
+
+[node name="CardSlot2" parent="Layout/DealerZone/CardSlots" instance=ExtResource("2_xmpvw")]
+position = Vector2(797, 530)
+scale = Vector2(0.15, 0.15)
+
+[node name="CardSlot3" parent="Layout/DealerZone/CardSlots" instance=ExtResource("2_xmpvw")]
+position = Vector2(1120, 530)
+scale = Vector2(0.15, 0.15)
+
+[node name="PlayerZone" type="Node2D" parent="Layout"]
+position = Vector2(960, 896)
+
+[node name="PlayerArea" type="Area2D" parent="Layout/PlayerZone"]
+collision_layer = 512
+collision_mask = 512
+
+[node name="ShapePlayer" type="CollisionShape2D" parent="Layout/PlayerZone/PlayerArea"]
+position = Vector2(0, 64.5)
+scale = Vector2(100, 100)
+shape = SubResource("RectangleShape2D_qpde6")
+debug_color = Color(0.32549, 0.611765, 0.352941, 0.113725)
+
+[node name="PlayerDeck" parent="Layout/PlayerZone" instance=ExtResource("3_ssind")]
+position = Vector2(-1164, 59)
+scale = Vector2(0.15, 0.15)
+
+[node name="PlayerHand" type="Node2D" parent="Layout/PlayerZone"]
+script = ExtResource("4_ohdf0")
+
+[node name="DroppableZone" type="Node2D" parent="Layout/PlayerZone"]
+position = Vector2(2880, 2688)
+
+[node name="DroppableArea" type="Area2D" parent="Layout/PlayerZone/DroppableZone"]
+collision_layer = 4096
+collision_mask = 4096
+
+[node name="DroppableShape" type="CollisionShape2D" parent="Layout/PlayerZone/DroppableZone/DroppableArea"]
+position = Vector2(-2878, -2848.25)
+scale = Vector2(100, 100)
+shape = SubResource("RectangleShape2D_lkyhv")
+debug_color = Color(0.835712, 0.242512, 0.751048, 0.113725)
+
+[node name="DragZone" type="Node2D" parent="Layout"]
+position = Vector2(1920, 1792)
+
+[node name="DragArea" type="Area2D" parent="Layout/DragZone"]
+collision_layer = 0
+collision_mask = 0
+
+[node name="ShapeDrag" type="CollisionShape2D" parent="Layout/DragZone/DragArea"]
+position = Vector2(-960, -1038.5)
+scale = Vector2(100, 100)
+shape = SubResource("RectangleShape2D_jnx72")
+debug_color = Color(0.32549, 0.611765, 0.352941, 0.113725)
+
+[connection signal="update_eclipsed_card" from="Managers/CardManager" to="Managers/ActionManager" method="_on_update_eclipsed_card"]
+[connection signal="focus_entered" from="UI/ActionUI/Panel/AdditionButton" to="UI/ActionUI" method="_on_addition_button_focus_entered"]
+[connection signal="focus_exited" from="UI/ActionUI/Panel/AdditionButton" to="UI/ActionUI" method="_on_addition_button_focus_exited"]
+[connection signal="focus_entered" from="UI/ActionUI/Panel/SubtractionButton" to="UI/ActionUI" method="_on_subtraction_button_focus_entered"]
+[connection signal="focus_exited" from="UI/ActionUI/Panel/SubtractionButton" to="UI/ActionUI" method="_on_subtraction_button_focus_exited"]
+[connection signal="focus_entered" from="UI/ActionUI/Panel/DuplicationButton" to="UI/ActionUI" method="_on_duplication_button_focus_entered"]
+[connection signal="focus_exited" from="UI/ActionUI/Panel/DuplicationButton" to="UI/ActionUI" method="_on_duplication_button_focus_exited"]

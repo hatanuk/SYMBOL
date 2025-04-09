@@ -1,0 +1,261 @@
+[gd_scene load_steps=23 format=3 uid="uid://bpssdvovofd4w"]
+
+[ext_resource type="Script" path="res://scripts/dealer/dealer_card.gd" id="1_0qrbg"]
+[ext_resource type="Animation" uid="uid://6h6x4yndpj8t" path="res://animations/card/RESET.res" id="2_a84um"]
+[ext_resource type="Animation" uid="uid://hbmweae4q2e7" path="res://animations/card/card_flip_to_back.res" id="3_fkbkt"]
+[ext_resource type="Animation" uid="uid://cvsplij5067qk" path="res://animations/card/card_flip_to_front.res" id="4_n1doa"]
+[ext_resource type="Animation" uid="uid://ndhcquf7l6ap" path="res://animations/card/submit_and_fade.res" id="5_hmgip"]
+[ext_resource type="Shader" path="res://shaders/dissolve_and_rotation.gdshader" id="6_hdjep"]
+[ext_resource type="Script" path="res://scripts/card/card_base.gd" id="7_54psk"]
+[ext_resource type="Texture2D" uid="uid://dw7rh43814r06" path="res://scenes/2e2d1c3e8264f18428af57af4293415a859cbc8a_2_512x512.jpeg" id="7_grvun"]
+[ext_resource type="Script" path="res://scripts/card/card_back.gd" id="8_j0pbm"]
+[ext_resource type="Texture2D" uid="uid://bm24tlxrvjsts" path="res://resources/images/kenny_icons/pattern_46.png" id="9_jti1i"]
+[ext_resource type="Script" path="res://scripts/card/card_back_pattern.gd" id="10_045pu"]
+[ext_resource type="Texture2D" uid="uid://jgck5orwejno" path="res://resources/icon_cache/1f3a1.png" id="11_qklf5"]
+[ext_resource type="Texture2D" uid="uid://cqac2v168ehus" path="res://resources/icon_cache/1f4ae.png" id="12_y7sqj"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_l28gy"]
+
+[sub_resource type="Animation" id="Animation_evghs"]
+resource_name = "emerge"
+length = 1.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.833333),
+"transitions": PackedFloat32Array(0.329877, 0.0883886),
+"update": 0,
+"values": [Vector2(0, 600), Vector2(0, -50)]
+}
+
+[sub_resource type="Animation" id="Animation_1yr5c"]
+resource_name = "dissolve"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SubViewportContainer:material:shader_parameter/dissolve_value")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.7, 0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_2unyn"]
+_data = {
+"RESET": ExtResource("2_a84um"),
+"card_flip_to_back": ExtResource("3_fkbkt"),
+"card_flip_to_front": ExtResource("4_n1doa"),
+"dissolve": SubResource("Animation_1yr5c"),
+"emerge": SubResource("Animation_evghs"),
+"submit_and_fade": ExtResource("5_hmgip")
+}
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_va2xp"]
+shader = ExtResource("6_hdjep")
+shader_parameter/fov = 80.0
+shader_parameter/cull_back = false
+shader_parameter/y_rot = 8.55e-06
+shader_parameter/x_rot = 0.0
+shader_parameter/inset = 0.0
+shader_parameter/dissolve_value = 1.0
+shader_parameter/burn_size = 0.1
+shader_parameter/burn_color = Color(0, 0, 0, 1)
+shader_parameter/burn_offset = Vector2(1, 1)
+shader_parameter/size_effect = 0.1
+shader_parameter/speed = 1.0
+shader_parameter/highlight_strength = 1.3
+shader_parameter/color_mode_toggle = false
+shader_parameter/is_horizontal = false
+shader_parameter/pause_duration = 2.0
+shader_parameter/modulate = Color(1, 1, 1, 1)
+shader_parameter/dissolve_texture = ExtResource("7_grvun")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mgy5w"]
+bg_color = Color(0.302853, 0.410084, 0.85697, 1)
+corner_radius_top_left = 50
+corner_radius_top_right = 50
+corner_radius_bottom_right = 50
+corner_radius_bottom_left = 50
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qb73n"]
+bg_color = Color(0.302853, 0.410084, 0.85697, 1)
+corner_radius_top_left = 50
+corner_radius_top_right = 50
+corner_radius_bottom_right = 50
+corner_radius_bottom_left = 50
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_4yidt"]
+texture = ExtResource("9_jti1i")
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
+modulate_color = Color(1, 1, 1, 0.172549)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rr6ws"]
+bg_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 50
+corner_radius_top_right = 50
+corner_radius_bottom_right = 50
+corner_radius_bottom_left = 50
+
+[node name="DealerCard" type="Node2D"]
+material = SubResource("ShaderMaterial_l28gy")
+scale = Vector2(0.15, 0.15)
+script = ExtResource("1_0qrbg")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_2unyn")
+}
+autoplay = "emerge"
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
+material = SubResource("ShaderMaterial_va2xp")
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -375.0
+offset_top = -525.0
+offset_right = 375.0
+offset_bottom = 525.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(750, 1050)
+render_target_update_mode = 4
+
+[node name="Graphics" type="Control" parent="SubViewportContainer/SubViewport"]
+clip_children = 2
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -375.0
+offset_top = -525.0
+offset_right = 375.0
+offset_bottom = 525.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+mouse_filter = 2
+
+[node name="CardBase" type="Panel" parent="SubViewportContainer/SubViewport/Graphics"]
+use_parent_material = true
+clip_contents = true
+layout_mode = 1
+offset_right = 750.0
+offset_bottom = 1050.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_mgy5w")
+script = ExtResource("7_54psk")
+
+[node name="CardBack" type="Panel" parent="SubViewportContainer/SubViewport/Graphics/CardBase"]
+clip_children = 2
+use_parent_material = true
+clip_contents = true
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.405
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -290.417
+offset_top = -511.667
+offset_right = 363.333
+offset_bottom = 513.333
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_qb73n")
+script = ExtResource("8_j0pbm")
+metadata/_edit_group_ = true
+
+[node name="CardBackPattern" type="Panel" parent="SubViewportContainer/SubViewport/Graphics/CardBase/CardBack"]
+clip_children = 2
+use_parent_material = true
+clip_contents = true
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.442
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -362.5
+offset_top = -453.05
+offset_right = 362.5
+offset_bottom = 512.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(350, 500)
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_4yidt")
+script = ExtResource("10_045pu")
+
+[node name="CardFront" type="Panel" parent="SubViewportContainer/SubViewport/Graphics/CardBase"]
+clip_children = 2
+use_parent_material = true
+clip_contents = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -361.667
+offset_top = -511.667
+offset_right = 363.333
+offset_bottom = 513.333
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(362, 512)
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_rr6ws")
+metadata/_edit_group_ = true
+
+[node name="EmojiTexture" type="TextureRect" parent="SubViewportContainer/SubViewport/Graphics/CardBase/CardFront"]
+use_parent_material = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -64.0
+offset_top = -64.0
+offset_right = 64.0
+offset_bottom = 64.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(4, 4)
+pivot_offset = Vector2(64, 64)
+texture = ExtResource("11_qklf5")
+
+[node name="ModifierTexture" type="TextureRect" parent="SubViewportContainer/SubViewport/Graphics/CardBase"]
+visible = false
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -40.0
+offset_bottom = 40.0
+grow_horizontal = 0
+texture = ExtResource("12_y7sqj")
+
+[node name="LifetimeTimer" type="Timer" parent="."]
+
+[connection signal="timeout" from="LifetimeTimer" to="." method="_on_tickdown"]

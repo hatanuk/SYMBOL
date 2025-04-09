@@ -1,0 +1,107 @@
+[gd_scene load_steps=12 format=3 uid="uid://qxfp15prhmt"]
+
+[ext_resource type="Script" path="res://scripts/UI/score_ui.gd" id="1_pd1af"]
+[ext_resource type="FontFile" uid="uid://be10y8fgoiayy" path="res://addons/icons-fonts/icons_fonts/emojis/NotoColorEmoji.ttf" id="2_khcke"]
+[ext_resource type="Script" path="res://addons/icons-fonts/nodes/FontIcon.gd" id="3_nldwd"]
+[ext_resource type="Script" path="res://addons/icons-fonts/resources/FontIconSetting.gd" id="4_qyddl"]
+[ext_resource type="StyleBox" uid="uid://b1inhlfaqqtpw" path="res://resources/themes/multiplayer.tres" id="5_3om18"]
+[ext_resource type="FontFile" uid="uid://60niuseer8g5" path="res://resources/fonts/Tektur-Bold.ttf" id="6_hmlk3"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1yr2o"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_lqt82"]
+font = ExtResource("2_khcke")
+font_size = 64
+shadow_size = 0
+shadow_color = Color(1, 1, 1, 1)
+shadow_offset = Vector2(0, 0)
+
+[sub_resource type="Resource" id="Resource_j3cj4"]
+script = ExtResource("4_qyddl")
+icon_font = "Emojis"
+icon_name = "bank"
+icon_size = 64
+icon_color = Color(1, 1, 1, 1)
+outline_color = Color(1, 1, 1, 1)
+outline_size = 0
+shadow_color = Color(1, 1, 1, 1)
+shadow_size = 0
+shadow_offset = Vector2(0, 0)
+
+[sub_resource type="LabelSettings" id="LabelSettings_mvmo3"]
+font = ExtResource("2_khcke")
+font_size = 24
+shadow_size = 0
+shadow_color = Color(1, 1, 1, 1)
+shadow_offset = Vector2(0, 0)
+
+[sub_resource type="Resource" id="Resource_kx23u"]
+script = ExtResource("4_qyddl")
+icon_font = "Emojis"
+icon_name = "coin"
+icon_size = 24
+icon_color = Color(1, 1, 1, 1)
+outline_color = Color(1, 1, 1, 1)
+outline_size = 0
+shadow_color = Color(1, 1, 1, 1)
+shadow_size = 0
+shadow_offset = Vector2(0, 0)
+
+[node name="ScoreUI" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+script = ExtResource("1_pd1af")
+
+[node name="FontIcon" type="Label" parent="."]
+material = SubResource("ShaderMaterial_1yr2o")
+layout_mode = 2
+offset_left = 30.0
+offset_top = 2.0
+offset_right = 94.0
+offset_bottom = 63.0
+text = "🏦"
+label_settings = SubResource("LabelSettings_lqt82")
+script = ExtResource("3_nldwd")
+icon_settings = SubResource("Resource_j3cj4")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 2
+offset_top = 59.0
+offset_right = 125.0
+offset_bottom = 86.0
+size_flags_vertical = 3
+theme_override_styles/panel = ExtResource("5_3om18")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -22.5
+offset_top = -11.5
+offset_right = 15.5
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CoinIcon" type="Label" parent="Panel/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_stretch_ratio = 0.0
+text = "🪙"
+label_settings = SubResource("LabelSettings_mvmo3")
+script = ExtResource("3_nldwd")
+icon_settings = SubResource("Resource_kx23u")
+
+[node name="ScoreLabel" type="Label" parent="Panel/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+theme_override_constants/outline_size = 7
+theme_override_fonts/font = ExtResource("6_hmlk3")
+theme_override_font_sizes/font_size = 0
+text = "0"

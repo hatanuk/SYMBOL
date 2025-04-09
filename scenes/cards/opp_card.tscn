@@ -1,0 +1,286 @@
+[gd_scene load_steps=21 format=3 uid="uid://bac3b123inw80"]
+
+[ext_resource type="Script" path="res://scripts/opponent/opp_card.gd" id="1_gyayi"]
+[ext_resource type="Animation" uid="uid://6h6x4yndpj8t" path="res://animations/card/RESET.res" id="2_j4yck"]
+[ext_resource type="Animation" uid="uid://hbmweae4q2e7" path="res://animations/card/card_flip_to_back.res" id="3_g748g"]
+[ext_resource type="Animation" uid="uid://cvsplij5067qk" path="res://animations/card/card_flip_to_front.res" id="4_j6yn2"]
+[ext_resource type="Animation" uid="uid://ndhcquf7l6ap" path="res://animations/card/submit_and_fade.res" id="5_223qp"]
+[ext_resource type="Script" path="res://scripts/card/card_base.gd" id="6_lk7eb"]
+[ext_resource type="Script" path="res://scripts/card/card_back.gd" id="7_iua2d"]
+[ext_resource type="Texture2D" uid="uid://bm24tlxrvjsts" path="res://resources/images/kenny_icons/pattern_46.png" id="8_at3hq"]
+[ext_resource type="Script" path="res://scripts/card/card_back_pattern.gd" id="9_3ufwk"]
+[ext_resource type="Texture2D" uid="uid://jgck5orwejno" path="res://resources/icon_cache/1f3a1.png" id="10_4iri0"]
+[ext_resource type="Texture2D" uid="uid://cqac2v168ehus" path="res://resources/icon_cache/1f4ae.png" id="11_leif1"]
+
+[sub_resource type="Animation" id="Animation_4e0pg"]
+resource_name = "reject"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SubViewportContainer/SubViewport/Graphics:modulate")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0.77, 0.3696, 0.396293, 1), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ven33"]
+_data = {
+"RESET": ExtResource("2_j4yck"),
+"card_flip_to_back": ExtResource("3_g748g"),
+"card_flip_to_front": ExtResource("4_j6yn2"),
+"reject": SubResource("Animation_4e0pg"),
+"submit_and_fade": ExtResource("5_223qp")
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_odx73"]
+
+[sub_resource type="Shader" id="Shader_wvx7d"]
+code = "// Hey this is Hei! This shader \"fakes\" a 3D-camera perspective on CanvasItems.
+// License: MIT
+
+shader_type canvas_item;
+
+// Camera FOV
+uniform float fov : hint_range(1, 179) = 90;
+uniform bool cull_back = true;
+uniform float y_rot : hint_range(-180, 180) = 0.0;
+uniform float x_rot : hint_range(-180, 180) = 0.0;
+// At 0, the image retains its size when unrotated.
+// At 1, the image is resized so that it can do a full
+// rotation without clipping inside its rect.
+uniform float inset : hint_range(0, 1) = 0.0;
+// Consider changing this to a uniform and changing it from code
+
+varying flat vec2 o;
+varying vec3 p;
+
+
+// Creates rotation matrix
+void vertex(){
+	float sin_b = sin(y_rot / 180.0 * PI);
+	float cos_b = cos(y_rot / 180.0 * PI);
+	float sin_c = sin(x_rot / 180.0 * PI);
+	float cos_c = cos(x_rot / 180.0 * PI);
+
+	mat3 inv_rot_mat;
+	inv_rot_mat[0][0] = cos_b;
+	inv_rot_mat[0][1] = 0.0;
+	inv_rot_mat[0][2] = -sin_b;
+
+	inv_rot_mat[1][0] = sin_b * sin_c;
+	inv_rot_mat[1][1] = cos_c;
+	inv_rot_mat[1][2] = cos_b * sin_c;
+
+	inv_rot_mat[2][0] = sin_b * cos_c;
+	inv_rot_mat[2][1] = -sin_c;
+	inv_rot_mat[2][2] = cos_b * cos_c;
+
+
+	float t = tan(fov / 360.0 * PI);
+	p = inv_rot_mat * vec3((UV - 0.5), 0.5 / t);
+	float v = (0.5 / t) + 0.5;
+	p.xy *= v * inv_rot_mat[2].z;
+	o = v * inv_rot_mat[2].xy;
+
+	VERTEX += (UV - 0.5) / TEXTURE_PIXEL_SIZE * t * (1.0 - inset);
+}
+
+void fragment(){
+	if (cull_back && p.z <= 0.0) discard;
+	vec2 uv = (p.xy / p.z).xy - o;
+    COLOR = texture(TEXTURE, uv + 0.5);
+	COLOR.a *= step(max(abs(uv.x), abs(uv.y)), 0.5);
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_eyh3d"]
+shader = SubResource("Shader_wvx7d")
+shader_parameter/fov = 80.0
+shader_parameter/cull_back = false
+shader_parameter/y_rot = 8.55e-06
+shader_parameter/x_rot = 0.0
+shader_parameter/inset = 0.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ktf2v"]
+bg_color = Color(0.302853, 0.410084, 0.85697, 1)
+corner_radius_top_left = 50
+corner_radius_top_right = 50
+corner_radius_bottom_right = 50
+corner_radius_bottom_left = 50
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_s2b27"]
+bg_color = Color(0.302853, 0.410084, 0.85697, 1)
+corner_radius_top_left = 50
+corner_radius_top_right = 50
+corner_radius_bottom_right = 50
+corner_radius_bottom_left = 50
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_niujy"]
+texture = ExtResource("8_at3hq")
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
+modulate_color = Color(1, 1, 1, 0.0980392)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g1uwv"]
+bg_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 50
+corner_radius_top_right = 50
+corner_radius_bottom_right = 50
+corner_radius_bottom_left = 50
+
+[node name="OppCard" type="Node2D"]
+script = ExtResource("1_gyayi")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_ven33"),
+"cards": SubResource("AnimationLibrary_odx73")
+}
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
+material = SubResource("ShaderMaterial_eyh3d")
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -375.0
+offset_top = -525.0
+offset_right = 375.0
+offset_bottom = 525.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(750, 1050)
+render_target_update_mode = 4
+
+[node name="Graphics" type="Control" parent="SubViewportContainer/SubViewport"]
+clip_children = 2
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -375.0
+offset_top = -525.0
+offset_right = 375.0
+offset_bottom = 525.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+mouse_filter = 2
+
+[node name="CardBase" type="Panel" parent="SubViewportContainer/SubViewport/Graphics"]
+z_index = -1
+clip_contents = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ktf2v")
+script = ExtResource("6_lk7eb")
+
+[node name="CardBack" type="Panel" parent="SubViewportContainer/SubViewport/Graphics/CardBase"]
+modulate = Color(1, 1, 1, 0)
+clip_children = 2
+clip_contents = true
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.405
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -290.417
+offset_top = -511.667
+offset_right = 363.333
+offset_bottom = 513.333
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_s2b27")
+script = ExtResource("7_iua2d")
+metadata/_edit_group_ = true
+
+[node name="CardBackPattern" type="Panel" parent="SubViewportContainer/SubViewport/Graphics/CardBase/CardBack"]
+clip_children = 2
+clip_contents = true
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.442
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -362.5
+offset_top = -453.05
+offset_right = 362.5
+offset_bottom = 512.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(350, 500)
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_niujy")
+script = ExtResource("9_3ufwk")
+
+[node name="CardFront" type="Panel" parent="SubViewportContainer/SubViewport/Graphics/CardBase"]
+visible = false
+clip_children = 2
+clip_contents = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -361.667
+offset_top = -511.667
+offset_right = 363.333
+offset_bottom = 513.333
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(362, 512)
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_g1uwv")
+metadata/_edit_group_ = true
+
+[node name="EmojiTexture" type="TextureRect" parent="SubViewportContainer/SubViewport/Graphics/CardBase/CardFront"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -64.0
+offset_top = -64.0
+offset_right = 64.0
+offset_bottom = 64.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(4, 4)
+pivot_offset = Vector2(64, 64)
+mouse_filter = 2
+texture = ExtResource("10_4iri0")
+
+[node name="ModifierTexture" type="TextureRect" parent="SubViewportContainer/SubViewport/Graphics/CardBase"]
+visible = false
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -40.0
+offset_bottom = 40.0
+grow_horizontal = 0
+mouse_filter = 2
+texture = ExtResource("11_leif1")

@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://dk7bhqqrrrp0r"
+path="res://.godot/imported/JDSherbert - Tabletop Games SFX Pack - Piece Impact - 1.wav-ee29bc2fbee8f7c4953d43773dbb742f.sample"
+
+[deps]
+
+source_file="res://resources/audio/Stereo/wav (SD)/JDSherbert - Tabletop Games SFX Pack - Piece Impact - 1.wav"
+dest_files=["res://.godot/imported/JDSherbert - Tabletop Games SFX Pack - Piece Impact - 1.wav-ee29bc2fbee8f7c4953d43773dbb742f.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

@@ -1,0 +1,20 @@
+[gd_scene load_steps=5 format=3 uid="uid://bcxy78tvxcavt"]
+
+[ext_resource type="Script" path="res://scripts/resource_scripts/tools/icon_scraper.gd" id="1_6o6iw"]
+[ext_resource type="Script" path="res://scripts/resource_scripts/tools/png_generator.gd" id="2_kkioq"]
+[ext_resource type="Script" path="res://scripts/singletons/cache_handler.gd" id="3_bqqlw"]
+[ext_resource type="Texture2D" path="res://resources/images/18593.png" id="4_3vk3s"]
+
+[node name="RequestHandler" type="Node"]
+script = ExtResource("1_6o6iw")
+
+[node name="IconFetcher" type="HTTPRequest" parent="."]
+
+[node name="Scraper" type="Node" parent="."]
+script = ExtResource("2_kkioq")
+
+[node name="CacheHandler" type="Node" parent="."]
+script = ExtResource("3_bqqlw")
+default_texture = ExtResource("4_3vk3s")
+
+[connection signal="request_completed" from="IconFetcher" to="." method="_http_request_completed"]

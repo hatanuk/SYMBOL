@@ -1,0 +1,15 @@
+[remap]
+
+importer="import_gif_to_sprite_frames"
+type="SpriteFrames"
+uid="uid://cbvtuav5wc1o7"
+path="res://.godot/imported/beating_heart.gif-46e69bb69a45daaa8f0cfc74bf94bda8.tres"
+
+[deps]
+
+source_file="res://resources/images/energy_system/beating_heart.gif"
+dest_files=["res://.godot/imported/beating_heart.gif-46e69bb69a45daaa8f0cfc74bf94bda8.tres"]
+
+[params]
+
+frames_per_second=30

@@ -1,0 +1,104 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+[application]
+
+config/name="cardgame"
+run/main_scene="res://scenes/main.tscn"
+config/features=PackedStringArray("4.3", "Forward Plus")
+addons/icon_finder/preview_size=47
+
+[autoload]
+
+CacheHandler="*res://scripts/singletons/cache_handler.gd"
+PlayerInfo="*res://scripts/singletons/player_info.gd"
+GameInfo="*res://scripts/singletons/game_info.gd"
+Lobby="*res://scripts/singletons/lobby.gd"
+IconsFonts="*res://addons/icons-fonts/icons_fonts/IconsFonts.gd"
+
+[display]
+
+window/size/viewport_width=1920
+window/size/viewport_height=1080
+window/size/mode=2
+window/size/resizable=false
+window/stretch/mode="canvas_items"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/PaletteTools/plugin.cfg", "res://addons/TextureRectRounded/plugin.cfg", "res://addons/godot_state_charts/plugin.cfg", "res://addons/icons-fonts/plugin.cfg", "res://addons/tnowe_extra_controls/plugin.cfg")
+
+[importer_defaults]
+
+import_gif_to_animated_texture={}
+
+[input]
+
+primary_interact={
+"deadzone": 0.5,
+"events": [Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"button_mask":0,"position":Vector2(0, 0),"global_position":Vector2(0, 0),"factor":1.0,"button_index":1,"canceled":false,"pressed":false,"double_click":false,"script":null)
+]
+}
+secondary_interact={
+"deadzone": 0.5,
+"events": [Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"button_mask":0,"position":Vector2(0, 0),"global_position":Vector2(0, 0),"factor":1.0,"button_index":2,"canceled":false,"pressed":false,"double_click":false,"script":null)
+]
+}
+
+[layer_names]
+
+2d_physics/layer_1="cards"
+2d_physics/layer_2="card_slots"
+2d_physics/layer_3="card_decks"
+2d_physics/layer_4="actionable_card_zone"
+2d_physics/layer_5="dealer_cards"
+2d_physics/layer_10="player_zone"
+2d_physics/layer_11="opponent_zone"
+2d_physics/layer_12="dealer_zone"
+2d_physics/layer_13="droppable_zone"
+
+[shader_globals]
+
+affine_texture_mapping={
+"type": "bool",
+"value": true
+}
+fog_color={
+"type": "color",
+"value": Color(0, 0, 0, 1)
+}
+fog_start_distance={
+"type": "float",
+"value": 0.0
+}
+fog_end_distance={
+"type": "float",
+"value": 0.0
+}
+cull_distance={
+"type": "float",
+"value": 64.0
+}
+texture_filtering={
+"type": "bool",
+"value": false
+}
+texture_lod_halve_distance={
+"type": "float",
+"value": 0.0
+}
+vertex_snap_intensity={
+"type": "int",
+"value": 2
+}
+mouse_screen_pos={
+"type": "vec2",
+"value": Vector2(0, 0)
+}

@@ -1,0 +1,263 @@
+[gd_scene load_steps=21 format=3 uid="uid://dwaqrcw3soxud"]
+
+[ext_resource type="Texture2D" uid="uid://yhg0sr15eqsh" path="res://resources/images/Screenshot 2025-02-26 at 1.36.14 PM.png" id="1_er6e3"]
+[ext_resource type="Script" path="res://scripts/main.gd" id="1_lkjkp"]
+[ext_resource type="Script" path="res://scripts/managers/card_manager.gd" id="1_qquhs"]
+[ext_resource type="Script" path="res://scripts/managers/input_manager.gd" id="7_urdnq"]
+[ext_resource type="Script" path="res://action_manager.gd" id="8_0xalq"]
+[ext_resource type="Resource" uid="uid://ihky1d8mbxxw" path="res://resources/database/card_database.tres" id="9_lsgf6"]
+[ext_resource type="Script" path="res://scripts/ui.gd" id="10_lvi0o"]
+[ext_resource type="PackedScene" uid="uid://dfcu8lmlpce6u" path="res://scenes/action_ui.tscn" id="11_b2qxy"]
+[ext_resource type="Script" path="res://scripts/managers/database_manager.gd" id="12_g76wc"]
+[ext_resource type="Script" path="res://scripts/managers/dealer_manager.gd" id="13_en003"]
+[ext_resource type="Script" path="res://scripts/managers/game_manager.gd" id="16_33omx"]
+[ext_resource type="PackedScene" uid="uid://bb6ctelj6pghc" path="res://scenes/game_over_ui.tscn" id="16_kingx"]
+[ext_resource type="PackedScene" uid="uid://qxfp15prhmt" path="res://scenes/score_ui.tscn" id="18_cirog"]
+[ext_resource type="PackedScene" uid="uid://dbngvrink7l8s" path="res://scenes/threshold.tscn" id="18_dgwoc"]
+[ext_resource type="PackedScene" uid="uid://fwff8poeqhcm" path="res://scenes/hint.tscn" id="19_bqib7"]
+[ext_resource type="Shader" path="res://shaders/crt.gdshader" id="19_t4gmi"]
+[ext_resource type="PackedScene" uid="uid://dejer6u1sdad1" path="res://scenes/energy_meter.tscn" id="20_bdqfc"]
+[ext_resource type="PackedScene" uid="uid://c5i2ey0pve3vh" path="res://scenes/card_counter_ui.tscn" id="24_jkrye"]
+[ext_resource type="Script" path="res://scripts/game_types/mp_manager.gd" id="25_324it"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_rlctm"]
+shader = ExtResource("19_t4gmi")
+shader_parameter/overlay = false
+shader_parameter/scanlines_opacity = 0.078
+shader_parameter/scanlines_width = 0.028
+shader_parameter/grille_opacity = 0.075
+shader_parameter/resolution = Vector2(1280, 720)
+shader_parameter/pixelate = false
+shader_parameter/roll = false
+shader_parameter/roll_speed = 8.0
+shader_parameter/roll_size = 0.0
+shader_parameter/roll_variation = 5.0
+shader_parameter/distort_intensity = 0.0
+shader_parameter/noise_opacity = 1.0
+shader_parameter/noise_speed = 0.1
+shader_parameter/static_noise_intensity = 0.01
+shader_parameter/aberration = 4.75e-08
+shader_parameter/brightness = 1.0
+shader_parameter/discolor = false
+shader_parameter/warp_amount = 0.1
+shader_parameter/clip_warp = false
+shader_parameter/vignette_intensity = 0.1
+shader_parameter/vignette_opacity = 0.519
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_lkjkp")
+
+[node name="Background" type="Node2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="Background"]
+position = Vector2(992, 610)
+scale = Vector2(0.806597, 0.806597)
+texture = ExtResource("1_er6e3")
+region_enabled = true
+region_rect = Rect2(-1699.4, -836.375, 4400.42, 2921.51)
+
+[node name="Managers" type="Node2D" parent="."]
+
+[node name="ActionManager" type="Node2D" parent="Managers"]
+scale = Vector2(2.54603, 26.3944)
+script = ExtResource("8_0xalq")
+
+[node name="InputManager" type="Node2D" parent="Managers"]
+script = ExtResource("7_urdnq")
+
+[node name="DealerManager" type="Node2D" parent="Managers"]
+script = ExtResource("13_en003")
+
+[node name="GameManager" type="Node2D" parent="Managers"]
+script = ExtResource("16_33omx")
+
+[node name="CardManager" type="Node2D" parent="Managers"]
+script = ExtResource("1_qquhs")
+
+[node name="DatabaseManager" type="Node2D" parent="Managers"]
+script = ExtResource("12_g76wc")
+db_res = ExtResource("9_lsgf6")
+
+[node name="UI" type="Control" parent="."]
+z_index = 200
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1920.0
+offset_bottom = 1080.0
+size_flags_horizontal = 4
+mouse_filter = 2
+script = ExtResource("10_lvi0o")
+
+[node name="ActionUI" parent="UI" instance=ExtResource("11_b2qxy")]
+layout_mode = 1
+
+[node name="Hint" parent="UI" instance=ExtResource("19_bqib7")]
+layout_mode = 1
+anchors_preset = 7
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = -112.0
+offset_top = -62.0
+offset_right = 112.0
+offset_bottom = 0.0
+grow_vertical = 0
+
+[node name="Submit" type="Button" parent="UI"]
+layout_mode = 0
+offset_left = 26.9999
+offset_top = -435.0
+offset_right = 154.0
+offset_bottom = -362.0
+scale = Vector2(0.999088, 1)
+text = "Submit
+
+"
+
+[node name="EnergyUI" parent="UI" instance=ExtResource("20_bdqfc")]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_right = 0.0
+offset_left = 50.0
+offset_top = -130.0
+offset_right = 50.0
+offset_bottom = -130.0
+grow_horizontal = 1
+grow_vertical = 0
+
+[node name="ThresholdUI" parent="UI" instance=ExtResource("18_dgwoc")]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.0
+offset_left = -260.0
+offset_top = 50.0
+offset_right = -260.0
+offset_bottom = 50.0
+grow_vertical = 1
+
+[node name="ScoreUI" parent="UI" instance=ExtResource("18_cirog")]
+layout_mode = 1
+offset_left = 30.0
+offset_top = 22.0
+offset_right = 30.0
+offset_bottom = 22.0
+scale = Vector2(1.5, 1.5)
+
+[node name="CardCounterUI" parent="UI" instance=ExtResource("24_jkrye")]
+layout_mode = 1
+offset_left = 871.0
+offset_top = 1017.0
+offset_right = 871.0
+offset_bottom = 1017.0
+
+[node name="GameOverUI" parent="UI" instance=ExtResource("16_kingx")]
+visible = false
+layout_mode = 1
+
+[node name="Debug" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="ActiveCard" type="Label" parent="Debug"]
+layout_mode = 0
+offset_left = 1720.0
+offset_top = 32.0
+offset_right = 1852.0
+offset_bottom = 87.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 40
+text = "null"
+
+[node name="EclipsedCard" type="Label" parent="Debug"]
+layout_mode = 0
+offset_left = 1720.0
+offset_top = 81.0
+offset_right = 1852.0
+offset_bottom = 136.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 40
+text = "null"
+
+[node name="Addition" type="Label" parent="Debug"]
+layout_mode = 0
+offset_left = 1616.0
+offset_top = 732.0
+offset_right = 1748.0
+offset_bottom = 787.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 40
+text = "test"
+
+[node name="Score" type="Label" parent="Debug"]
+layout_mode = 0
+offset_left = 9.0
+offset_top = 1024.0
+offset_right = 141.0
+offset_bottom = 1079.0
+theme_override_colors/font_color = Color(0.405749, 0.695993, 0.422095, 1)
+theme_override_font_sizes/font_size = 40
+text = "null"
+
+[node name="ScoreOpp" type="Label" parent="Debug"]
+layout_mode = 0
+offset_left = -318.0
+offset_top = 91.0
+offset_right = -186.0
+offset_bottom = 146.0
+theme_override_colors/font_color = Color(0.732993, 0.117705, 0.350809, 1)
+theme_override_font_sizes/font_size = 40
+text = "null"
+
+[node name="Multiplayer" type="Node" parent="."]
+
+[node name="RPCManager" type="Node2D" parent="Multiplayer"]
+script = ExtResource("25_324it")
+
+[node name="CRTFilter" type="CanvasLayer" parent="."]
+
+[node name="ColorRect" type="ColorRect" parent="CRTFilter"]
+material = SubResource("ShaderMaterial_rlctm")
+offset_right = 1920.0
+offset_bottom = 1080.0
+mouse_filter = 2
+metadata/_edit_use_anchors_ = true
+
+[connection signal="ready" from="." to="Managers/GameManager" method="_on_main_ready"]
+[connection signal="begin_addition" from="Managers/ActionManager" to="Managers/DatabaseManager" method="_on_action_manager_begin_addition"]
+[connection signal="begin_duplication" from="Managers/ActionManager" to="Managers/GameManager" method="_on_action_manager_begin_duplication"]
+[connection signal="display_hint" from="Managers/ActionManager" to="UI/Hint" method="_on_action_manager_display_hint"]
+[connection signal="hide_hint" from="Managers/ActionManager" to="UI/Hint" method="_on_action_manager_hide_hint"]
+[connection signal="accepted_input" from="Managers/DealerManager" to="Managers/GameManager" method="_on_accepted_input"]
+[connection signal="accepted_input" from="Managers/DealerManager" to="Multiplayer/RPCManager" method="_on_accepted_input"]
+[connection signal="card_dealt" from="Managers/DealerManager" to="." method="_on_card_dealt"]
+[connection signal="card_lifetime_expired" from="Managers/DealerManager" to="Managers/GameManager" method="_on_card_lifetime_expired"]
+[connection signal="card_slot_cleared" from="Managers/DealerManager" to="Multiplayer/RPCManager" method="_on_dealer_manager_card_slot_cleared"]
+[connection signal="rejected_input" from="Managers/DealerManager" to="Multiplayer/RPCManager" method="_on_rejected_input"]
+[connection signal="display_added_score" from="Managers/GameManager" to="UI" method="_display_added_score"]
+[connection signal="game_end_animation" from="Managers/GameManager" to="UI/EnergyUI" method="_on_game_manager_game_end_animation"]
+[connection signal="game_end_animation" from="Managers/GameManager" to="UI/ThresholdUI" method="_on_game_manager_game_end_animation"]
+[connection signal="game_end_animation" from="Managers/GameManager" to="UI/ScoreUI" method="_on_game_manager_game_end_animation"]
+[connection signal="game_end_animation" from="Managers/GameManager" to="UI/GameOverUI" method="_on_game_end_animation"]
+[connection signal="score_changed" from="Managers/GameManager" to="UI/ScoreUI" method="_on_score_changed"]
+[connection signal="used_energy" from="Managers/GameManager" to="UI/EnergyUI" method="use_energy"]
+[connection signal="action_taken" from="Managers/CardManager" to="Managers/GameManager" method="_on_card_manager_action_taken"]
+[connection signal="card_drag_started" from="Managers/CardManager" to="Managers/ActionManager" method="_on_start_drag"]
+[connection signal="card_drag_started" from="Managers/CardManager" to="Managers/DealerManager" method="_on_card_drag_started"]
+[connection signal="card_drag_stopped" from="Managers/CardManager" to="Managers/ActionManager" method="_on_stop_drag"]
+[connection signal="card_dropped_on_slot" from="Managers/CardManager" to="Managers/DealerManager" method="_on_card_dropped_on_slot"]
+[connection signal="card_dropped_on_slot" from="Managers/CardManager" to="Managers/GameManager" method="_on_card_dropped_on_slot" flags=3]
+[connection signal="child_entered_tree" from="Managers/CardManager" to="Managers/CardManager" method="_on_child_entered_tree"]
+[connection signal="child_exiting_tree" from="Managers/CardManager" to="Managers/CardManager" method="_on_child_exiting_tree"]
+[connection signal="update_eclipsed_card" from="Managers/CardManager" to="Managers/ActionManager" method="_on_update_eclipsed_card"]
+[connection signal="updated_card_count" from="Managers/CardManager" to="UI/CardCounterUI" method="_on_updated_card_count"]
+[connection signal="addition_toggled" from="UI/ActionUI" to="Managers/ActionManager" method="_on_action_ui_addition_toggled"]
+[connection signal="duplication_toggled" from="UI/ActionUI" to="Managers/ActionManager" method="_on_action_ui_duplication_toggled"]
+[connection signal="subtraction_toggled" from="UI/ActionUI" to="Managers/ActionManager" method="_on_action_ui_subtraction_toggled"]
+[connection signal="pressed" from="UI/Submit" to="Managers/DealerManager" method="_on_submit_pressed"]
+[connection signal="exit_pressed" from="UI/GameOverUI" to="Managers/GameManager" method="_on_game_over_ui_exit_pressed"]
+[connection signal="retry_pressed" from="UI/GameOverUI" to="Managers/GameManager" method="_on_game_over_ui_retry_pressed"]

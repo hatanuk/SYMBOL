@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://bk0gg857dhfqv"
+path="res://.godot/imported/JDSherbert - Tabletop Games SFX Pack - Paper Flip - 1.ogg-50f33af8de630469e17cf7cbdf5981f7.oggvorbisstr"
+
+[deps]
+
+source_file="res://resources/audio/Stereo/ogg/JDSherbert - Tabletop Games SFX Pack - Paper Flip - 1.ogg"
+dest_files=["res://.godot/imported/JDSherbert - Tabletop Games SFX Pack - Paper Flip - 1.ogg-50f33af8de630469e17cf7cbdf5981f7.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

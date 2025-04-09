@@ -1,0 +1,71 @@
+[gd_scene load_steps=10 format=3 uid="uid://7kekve2wcr2a"]
+
+[ext_resource type="Script" path="res://scripts/UI/rank_icon.gd" id="1_v3bks"]
+[ext_resource type="Shader" path="res://shaders/color_change_and_shine.gdshader" id="2_jgml1"]
+[ext_resource type="FontFile" uid="uid://be10y8fgoiayy" path="res://addons/icons-fonts/icons_fonts/emojis/NotoColorEmoji.ttf" id="3_s1ujj"]
+[ext_resource type="Script" path="res://addons/icons-fonts/nodes/FontIcon.gd" id="4_ox1bu"]
+[ext_resource type="Script" path="res://addons/icons-fonts/resources/FontIconSetting.gd" id="5_p8u42"]
+[ext_resource type="Theme" uid="uid://c1khhns1mlew8" path="res://resources/themes/small_font.tres" id="6_nhekx"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4c5fd"]
+shader = ExtResource("2_jgml1")
+shader_parameter/tolerance = 0.8
+shader_parameter/prev_color = Color(0.745098, 0.745098, 0.745098, 1)
+shader_parameter/new_color = Color(0.745098, 0.745098, 0.745098, 1)
+shader_parameter/size_effect = 0.0500001
+shader_parameter/speed = 1.0
+shader_parameter/highlight_strength = -1.0
+shader_parameter/color_mode_toggle = true
+shader_parameter/is_horizontal = false
+shader_parameter/pause_duration = 0.5
+
+[sub_resource type="LabelSettings" id="LabelSettings_6jm7x"]
+font = ExtResource("3_s1ujj")
+font_size = 64
+font_color = Color(0.407393, 0.367964, 0.712243, 1)
+shadow_size = 0
+shadow_color = Color(1, 1, 1, 1)
+shadow_offset = Vector2(0, 0)
+
+[sub_resource type="Resource" id="Resource_f3yf6"]
+script = ExtResource("5_p8u42")
+icon_font = "Emojis"
+icon_name = "white_circle"
+icon_size = 64
+icon_color = Color(0.407393, 0.367964, 0.712243, 1)
+outline_color = Color(1, 1, 1, 1)
+outline_size = 0
+shadow_color = Color(1, 1, 1, 1)
+shadow_size = 0
+shadow_offset = Vector2(0, 0)
+
+[node name="RankUI" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+scale = Vector2(0.991596, 1)
+size_flags_horizontal = 4
+size_flags_vertical = 4
+script = ExtResource("1_v3bks")
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+scale = Vector2(1, 1.00572)
+
+[node name="FontIcon" type="Label" parent="CenterContainer"]
+material = SubResource("ShaderMaterial_4c5fd")
+layout_mode = 2
+text = "⚪"
+label_settings = SubResource("LabelSettings_6jm7x")
+script = ExtResource("4_ox1bu")
+icon_settings = SubResource("Resource_f3yf6")
+
+[node name="Label" type="Label" parent="CenterContainer"]
+layout_mode = 2
+theme = ExtResource("6_nhekx")
+theme_override_colors/font_shadow_color = Color(0.253843, 0.253843, 0.253843, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_y = 1
+theme_override_font_sizes/font_size = 30
+text = "1"

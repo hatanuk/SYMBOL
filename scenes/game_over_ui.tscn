@@ -1,0 +1,236 @@
+[gd_scene load_steps=15 format=3 uid="uid://bb6ctelj6pghc"]
+
+[ext_resource type="Script" path="res://scripts/game_over_ui.gd" id="1_ff221"]
+[ext_resource type="Shader" path="res://shaders/dissolve.gdshader" id="2_mcwj5"]
+[ext_resource type="Texture2D" uid="uid://dw7rh43814r06" path="res://scenes/2e2d1c3e8264f18428af57af4293415a859cbc8a_2_512x512.jpeg" id="3_bcqk2"]
+[ext_resource type="PackedScene" uid="uid://7kekve2wcr2a" path="res://scripts/UI/rank_ui.tscn" id="4_hka0e"]
+[ext_resource type="PackedScene" uid="uid://qxfp15prhmt" path="res://scenes/score_ui.tscn" id="5_lj8lf"]
+[ext_resource type="Texture2D" uid="uid://v7vcrba7gawc" path="res://1f504.png" id="6_5svk4"]
+[ext_resource type="Theme" uid="uid://bodrmvg3sr15w" path="res://resources/themes/white_box_theme.tres" id="7_3hm4h"]
+[ext_resource type="Texture2D" uid="uid://cyeawgg1g801g" path="res://23f8.png" id="8_lopwi"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_mbyg5"]
+shader = ExtResource("2_mcwj5")
+shader_parameter/dissolve_value = 1.0
+shader_parameter/burn_size = 0.02
+shader_parameter/burn_color = Color(0.68106, 0.354931, 0.948892, 1)
+shader_parameter/dissolve_texture = ExtResource("3_bcqk2")
+
+[sub_resource type="Animation" id="Animation_y3k0u"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_3m6c1"]
+resource_name = "fade_in"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_pmrmv"]
+resource_name = "on_click"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(0.728822, 0.728822, 0.728822, 1), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_nga2i"]
+_data = {
+"RESET": SubResource("Animation_y3k0u"),
+"fade_in": SubResource("Animation_3m6c1"),
+"on_click": SubResource("Animation_pmrmv")
+}
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7x54q"]
+bg_color = Color(0.960351, 0.960351, 0.960351, 1)
+border_width_left = 6
+border_width_top = 6
+border_width_right = 6
+border_width_bottom = 6
+border_color = Color(1, 1, 1, 1)
+border_blend = true
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+expand_margin_left = 4.0
+expand_margin_top = 4.0
+expand_margin_right = 4.0
+expand_margin_bottom = 4.0
+shadow_offset = Vector2(3, 3)
+
+[node name="GameOverUI" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_ff221")
+
+[node name="Blackness" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+
+[node name="ViewportScreenshot" type="TextureRect" parent="."]
+material = SubResource("ShaderMaterial_mbyg5")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 4
+
+[node name="RankUI" parent="." instance=ExtResource("4_hka0e")]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -44.0
+offset_top = -46.0
+offset_right = -44.0
+offset_bottom = -46.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.4, 1.4)
+
+[node name="ScoreUI" parent="." instance=ExtResource("5_lj8lf")]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -125.0
+offset_top = -94.0
+offset_right = -125.0
+offset_bottom = -94.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(2, 2)
+
+[node name="IconButtons" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_top = 160.0
+offset_bottom = 160.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="IconButtons"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -128.0
+offset_top = -128.0
+offset_right = 128.0
+offset_bottom = 128.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = -50
+
+[node name="Retry" type="TextureButton" parent="IconButtons/HBoxContainer"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+texture_normal = ExtResource("6_5svk4")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="IconButtons/HBoxContainer/Retry"]
+libraries = {
+"": SubResource("AnimationLibrary_nga2i")
+}
+
+[node name="Panel" type="Panel" parent="IconButtons/HBoxContainer/Retry"]
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+theme = ExtResource("7_3hm4h")
+theme_override_styles/panel = SubResource("StyleBoxFlat_7x54q")
+
+[node name="Exit" type="TextureButton" parent="IconButtons/HBoxContainer"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+texture_normal = ExtResource("8_lopwi")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="IconButtons/HBoxContainer/Exit"]
+libraries = {
+"": SubResource("AnimationLibrary_nga2i")
+}
+
+[node name="Panel" type="Panel" parent="IconButtons/HBoxContainer/Exit"]
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+theme = ExtResource("7_3hm4h")
+theme_override_styles/panel = SubResource("StyleBoxFlat_7x54q")
+
+[connection signal="pressed" from="IconButtons/HBoxContainer/Retry" to="." method="_on_retry_pressed"]
+[connection signal="pressed" from="IconButtons/HBoxContainer/Exit" to="." method="_on_exit_pressed"]

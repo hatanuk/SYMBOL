@@ -1,0 +1,68 @@
+[gd_scene load_steps=5 format=3 uid="uid://b81dqaw4wwkqv"]
+
+[ext_resource type="Script" path="res://scripts/main_menu/multiplayerUI.gd" id="1_voebe"]
+[ext_resource type="PackedScene" uid="uid://dwaqrcw3soxud" path="res://scenes/main.tscn" id="2_njbhc"]
+[ext_resource type="Script" path="res://scripts/singletons/lobby.gd" id="3_e35m7"]
+[ext_resource type="StyleBox" uid="uid://b1inhlfaqqtpw" path="res://resources/themes/multiplayer.tres" id="3_kun8v"]
+
+[node name="MultiplayerUI" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_voebe")
+game_scene = ExtResource("2_njbhc")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+offset_right = 226.0
+offset_bottom = 178.0
+theme_override_styles/panel = ExtResource("3_kun8v")
+
+[node name="JoinButton" type="Button" parent="Panel"]
+layout_mode = 2
+offset_left = 134.0
+offset_top = 23.0
+offset_right = 172.0
+offset_bottom = 54.0
+size_flags_horizontal = 10
+size_flags_vertical = 4
+text = "Join"
+
+[node name="HostButton" type="Button" parent="Panel"]
+layout_mode = 2
+offset_left = 55.0
+offset_top = 23.0
+offset_right = 99.0
+offset_bottom = 55.0
+size_flags_horizontal = 8
+text = "Host"
+
+[node name="CodeEntry" type="LineEdit" parent="Panel"]
+layout_mode = 0
+offset_left = 70.0
+offset_top = 133.0
+offset_right = 158.0
+offset_bottom = 164.0
+placeholder_text = "Code"
+
+[node name="ConnectionManager" type="Node2D" parent="Panel"]
+position = Vector2(-173, -31)
+script = ExtResource("3_e35m7")
+
+[node name="StartButton" type="Button" parent="Panel"]
+layout_mode = 0
+offset_left = 93.0
+offset_top = 81.0
+offset_right = 139.0
+offset_bottom = 112.0
+text = "Start
+"
+
+[node name="StatusLabel" type="Label" parent="Panel"]
+modulate = Color(0, 0, 0, 1)
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+
+[connection signal="pressed" from="Panel/JoinButton" to="." method="_on_join_button_pressed"]
+[connection signal="pressed" from="Panel/HostButton" to="." method="_on_host_button_pressed"]
+[connection signal="pressed" from="Panel/StartButton" to="." method="_on_start_button_pressed"]

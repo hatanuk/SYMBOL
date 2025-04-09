@@ -1,0 +1,84 @@
+[gd_scene load_steps=7 format=3 uid="uid://cxpfem5q0wgkr"]
+
+[ext_resource type="Texture2D" uid="uid://yhg0sr15eqsh" path="res://resources/images/Screenshot 2025-02-26 at 1.36.14 PM.png" id="1_2cfwh"]
+[ext_resource type="PackedScene" uid="uid://cpag02njdgi8x" path="res://scenes/card_slot.tscn" id="2_ujd5g"]
+[ext_resource type="PackedScene" uid="uid://gwv5w6c7myde" path="res://scenes/opp_deck.tscn" id="3_wy2m6"]
+[ext_resource type="Script" path="res://scripts/layout/opponent_hand.gd" id="4_tcgat"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_guunn"]
+size = Vector2(19, 2.11)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fm254"]
+size = Vector2(12.13, 3)
+
+[node name="OpponentField" type="Node2D"]
+
+[node name="Background" type="Node2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="Background"]
+position = Vector2(992, 610)
+scale = Vector2(0.806597, 0.806597)
+texture = ExtResource("1_2cfwh")
+region_enabled = true
+region_rect = Rect2(-1699.4, -836.375, 4400.42, 2921.51)
+
+[node name="DealerZone" type="Node2D" parent="."]
+position = Vector2(960, 540)
+
+[node name="DealerArea" type="Area2D" parent="DealerZone"]
+collision_layer = 2048
+collision_mask = 2048
+
+[node name="ShapeTarget" type="CollisionShape2D" parent="DealerZone/DealerArea"]
+position = Vector2(0, -14.5)
+scale = Vector2(100, 100)
+shape = SubResource("RectangleShape2D_guunn")
+debug_color = Color(0, 0.6, 0.701961, 0.0980392)
+
+[node name="CardSlots" type="Node2D" parent="DealerZone"]
+position = Vector2(-960, -540)
+
+[node name="CardSlot" parent="DealerZone/CardSlots" instance=ExtResource("2_ujd5g")]
+position = Vector2(960, 530)
+scale = Vector2(0.15, 0.15)
+
+[node name="CardSlot2" parent="DealerZone/CardSlots" instance=ExtResource("2_ujd5g")]
+position = Vector2(797, 530)
+scale = Vector2(0.15, 0.15)
+
+[node name="CardSlot3" parent="DealerZone/CardSlots" instance=ExtResource("2_ujd5g")]
+position = Vector2(1120, 530)
+scale = Vector2(0.15, 0.15)
+
+[node name="OpponentZone" type="Node2D" parent="."]
+position = Vector2(962, 180)
+
+[node name="OpponentArea" type="Area2D" parent="OpponentZone"]
+collision_layer = 1024
+collision_mask = 1024
+
+[node name="ShapeOpponent" type="CollisionShape2D" parent="OpponentZone/OpponentArea"]
+position = Vector2(-7.5, -7)
+scale = Vector2(100, 100)
+shape = SubResource("RectangleShape2D_fm254")
+debug_color = Color(0.94902, 0.168627, 0.372549, 0.054902)
+
+[node name="OpponentDeck" parent="OpponentZone" instance=ExtResource("3_wy2m6")]
+position = Vector2(-46, 7)
+scale = Vector2(0.15, 0.15)
+
+[node name="OpponentHand" type="Node2D" parent="OpponentZone"]
+position = Vector2(-2, 716)
+script = ExtResource("4_tcgat")
+
+[node name="Managers" type="Node2D" parent="."]
+
+[node name="ActionManager" type="Node2D" parent="Managers"]
+
+[node name="InputManager" type="Node2D" parent="Managers"]
+
+[node name="DealerManager" type="Node2D" parent="Managers"]
+
+[node name="CardManager" type="Node2D" parent="Managers"]
+
+[node name="DatabaseManager" type="Node2D" parent="Managers"]

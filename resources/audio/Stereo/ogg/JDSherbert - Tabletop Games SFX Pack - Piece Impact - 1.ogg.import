@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://b2xv1u0bjh77n"
+path="res://.godot/imported/JDSherbert - Tabletop Games SFX Pack - Piece Impact - 1.ogg-15b660e2c5321cb1819e63c072c0b9df.oggvorbisstr"
+
+[deps]
+
+source_file="res://resources/audio/Stereo/ogg/JDSherbert - Tabletop Games SFX Pack - Piece Impact - 1.ogg"
+dest_files=["res://.godot/imported/JDSherbert - Tabletop Games SFX Pack - Piece Impact - 1.ogg-15b660e2c5321cb1819e63c072c0b9df.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

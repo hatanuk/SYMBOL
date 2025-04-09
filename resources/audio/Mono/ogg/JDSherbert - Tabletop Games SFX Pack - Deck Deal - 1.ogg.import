@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://dtug2qph2pnhu"
+path="res://.godot/imported/JDSherbert - Tabletop Games SFX Pack - Deck Deal - 1.ogg-5796c23ff30c6802d91f2099acb404b4.oggvorbisstr"
+
+[deps]
+
+source_file="res://resources/audio/Mono/ogg/JDSherbert - Tabletop Games SFX Pack - Deck Deal - 1.ogg"
+dest_files=["res://.godot/imported/JDSherbert - Tabletop Games SFX Pack - Deck Deal - 1.ogg-5796c23ff30c6802d91f2099acb404b4.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
